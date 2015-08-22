@@ -2,6 +2,8 @@
 "use strict";
 
 var Player = require('./player');
+var Camera = require('./camera');
+var Point = require('./point');
 
 var canvas;
 var ctx;

@@ -1,3 +1,6 @@
+"use strict";
+var Player = require('./main');
+
 // Background object
 function Background() {
     this.default_width = 2000;

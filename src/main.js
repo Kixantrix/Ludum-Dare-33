@@ -1,14 +1,15 @@
 "use strict";
 
 var Player = require('./player');
+var Camera = require('./camera');
+var Point = require('./point');
+var Background = require('./background');
 
 var canvas;
 var ctx;
 var camera;
 window.paused = false;
 var player;
-
-var DEFAULT_DEPTH = 1;
 
 // Dynamic resize of canvas
 window.onload = function () {
@@ -18,7 +19,7 @@ window.onload = function () {
 	console.log(canvas);
 	ctx = canvas.getContext("2d");
 
-	camera = new Camera(0, 0, 1);
+	camera = new Camera(0, 0, 1, canvas);
 
 	player = new Player(50, 50);
 };
