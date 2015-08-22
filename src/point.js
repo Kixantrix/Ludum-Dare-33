@@ -6,4 +6,12 @@ function Point(x, y) {
     this.y = y;
 }
 
-module.exports = Point;
+function xPlusYDistance(x1, y1, x2, y2) {
+	return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+}
+
+function hypoDistance(x1, y1, x2, y2) {
+	return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+}
+
+module.exports = Point, xPlusYDistance, hypoDistance;

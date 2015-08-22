@@ -2,7 +2,7 @@
 
 var Ball = require('./ball');
 
-function Player = (x, y, camera, canvas) {
+function Player(x, y, camera, canvas) {
 	Ball.apply(this, x, y);
 	this.x = x;
 	this.y = y;
@@ -25,18 +25,31 @@ function Player = (x, y, camera, canvas) {
 	this.height = 64;
 	this.radius = 24;
 
+	this.name = "Player";
 }
 
 Player.prototype = Ball.prototype;
 Player.prototype.constructor = Player;
 
 Player.prototype.thrust = function(accel) {
-	this.velX += Math.sin(this.angle) * accel;
-	this.velY -= Math.cos(this.angle) * accel;
+	var newVelX = this.velX + Math.sin(this.angle) * accel;
+	var newVelY = this.velY - Math.cos(this.angle) * accel;
+	var newVel = Math.sqrt(Math.pow(newVelX, 2) + Math.pow(newVelY, 2));
+	var oldVel = Math.sqrt(Math.pow(this.velX, 2) + Math.pow(this.velY, 2));
+	if((newVel < this.maxVel) || (newVel < oldVel)) {
+		this.velX += newVelX;
+		this.velY -= newVelY;
+	}
+	// Thrust has been applied
+	return true;
 }
 
 Player.prototype.thrustAccel = function(accel) {
-	this.rotation += accel;
+
+	if(Math.abs(this.rotation + accel) < this.maxRotationSpeed) {
+		this.rotation += accel;
+	}
+	return true;
 }
 
 
@@ -45,40 +58,18 @@ Player.prototype.update = function(input) {
 	var thrustApplied = false;
 
 	if (input.keys[68]) {//D
-		if(this.rotation < this.maxRotationSpeed) {
-			this.thrustAccel(0.01);
-			rotationApplied = true;
-		}
+		rotationApplied = this.thrustAccel(0.01);
 	}
 	if (input.keys[65]) {//A
-		if(this.rotation > -1 * this.maxRotationSpeed) {
-			this.thrustAccel(-0.01);
-			rotationApplied = true;
-		}
+		rotationApplied = this.thrustAccel(-0.01);
 	}
 
 	if (input.keys[87]) {//W
-		var accel = 1;
-		var newVelX = this.velX + Math.sin(this.angle) * accel;
-		var newVelY = this.velY - Math.cos(this.angle) * accel;
-		var newVel = Math.sqrt(Math.pow(newVelX, 2) + Math.pow(newVelY, 2));
-		var oldVel = Math.sqrt(Math.pow(this.velX, 2) + Math.pow(this.velY, 2));
-		if((newVel < this.maxVel) || (newVel < oldVel)) {
-			this.thrust(accel)
-			thrustApplied = true;
-		}
+		thrustApplied = this.thrust(1);
 	}
 
 	if (input.keys[83]) {//S
-		var accel = -1
-		var newVelX = this.velX + Math.sin(this.angle) * accel;
-		var newVelY = this.velY - Math.cos(this.angle) * accel;
-		var newVel = Math.sqrt(Math.pow(newVelX, 2) + Math.pow(newVelY, 2));
-		var oldVel = Math.sqrt(Math.pow(this.velX, 2) + Math.pow(this.velY, 2));
-		if((newVel < this.maxVel) || (newVel < oldVel)) {
-			this.thrust(accel)
-			thrustApplied = true;
-		}
+		thrustApplied = this.thrust(1);
 	}
 
 	if(!thrustApplied) {
