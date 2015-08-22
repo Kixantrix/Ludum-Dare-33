@@ -70,7 +70,30 @@ function drawChars() {
 }
 
 // Background object
-function background() {
+function Background() {
+    this.default_width = 2000;
+    this.default_height = 2000;
+
+
+    this.draw = function(camera) {
+
+    }
+
+
+}
+
+// A field of stars as one chunk of width and height
+function StarField(width, height, numSmallStars, numBigStars) {
+    this.bigStars = [];
+    this.smallStars = [];
+
+    for(var i; i < numSmallStars; i++) {
+
+    }
+
+    for(var i; i < numSmallStars; i++) {
+        
+    }
 
 }
 
