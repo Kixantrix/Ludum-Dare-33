@@ -13,7 +13,16 @@ function Background() {
     }
 
     this.findEdges = function(camera) {
+        var bottom = this.getStarField(camera.x )
+    }
 
+    // Retreives starfield at x, y coordinate
+    this.getStarField = function(x, y) {
+        var key = x + " " + y;
+        if (!starFields[key]) {
+            starFields[key] = new StarField(x, y, this.default_width, this.default_height, 5, 15, 200, 50);
+        }
+        return starFields[key];
     }
 
 
@@ -37,19 +46,22 @@ function StarField(x, y, width, height, smallStarWidth, largeStarWidth, numSmall
 
     // Gen small stars coords
     for(var i; i < numBigStars; i++) {
-        x = Math.floor(Math.Random() * width);
-        y = Math.floor(Math.Random() * height);
+        x = Math.floor(Math.Random() * this.width) - this.width;
+        y = Math.floor(Math.Random() * this.height) - this.height;
         bigStars.add(new Point(x, y));
     }
 
     // Gen large stars coords
     for(var i; i < numSmallStars; i++) {   
-        x = Math.floor(Math.Random() * width);
-        y = Math.floor(Math.Random() * height);
+        x = Math.floor(Math.Random() * this.width);
+        y = Math.floor(Math.Random() * this.height);
         smallStars.add(new Point(x, y));
     }
     
     this.draw = function(camera, ctx) {
-
+        var transCoords = camera.transform(this.x, this.y);
+        ctx.rect(transCoords[0], transCoords[1], )
     }
 }
+
+module.exports = Background;
