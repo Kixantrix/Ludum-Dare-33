@@ -64,6 +64,7 @@ function draw() {
 
 // Draw background assets
 function drawBackground() {
+    /*
 	for (var x = Math.floor(camera.left() / 40) * 40; x < camera.right(); x += 40) {
 		ctx.moveTo.apply(ctx, camera.transform(x, camera.top()));
 		ctx.lineTo.apply(ctx, camera.transform(x, camera.bottom()));
@@ -74,6 +75,7 @@ function drawBackground() {
 	}
 	ctx.strokeStyle = "#eee";
 	ctx.stroke();
+    */
     background.draw(camera, ctx);
 
 
