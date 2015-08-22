@@ -6,13 +6,25 @@ function Background() {
     this.default_width = 2000;
     this.default_height = 2000;
 
-    this.starFields = {}
+    this.starFields = {};
 
+    // Draws background made up of fields
     this.draw = function(camera, ctx) {
-
+        fields = findFields(camera);
+        for(int i = 0; i < fields.length; i++) {
+            fields[i].draw(camera, ctx);
+        }
     }
 
-    this.findEdges = function(camera) {
+    // Finds all fields viewable by camera
+    this.findFields = function(camera) {
+        canvas = document.getElementById('game-canvas');
+        var edges = [];
+        for(var i = 0; i < Math.floor(canvas.width / this.default_width + 1); i++) {
+            for(var j = 0; j < Math.floor(canvas.height / this.default_width + 1); j++) {
+                edges.add(this.getStarField(Math.floor((camera.x - 1000)); 
+            }
+        }
         var bottom = this.getStarField(camera.x )
     }
 
@@ -58,16 +70,20 @@ function StarField(x, y, width, height, smallStarWidth, largeStarWidth, numSmall
         smallStars.add(new Point(x, y));
     }
     
+    // Draw the field
     this.draw = function(camera, ctx) {
-        for(var i = 0; i < numSmallStars; i++) {
-            var transCoords = camera.transform(this.x + smallStars[i].x, this.y + smallStars[i].y);
+        // Draw a white rectangle for each small star
+        for(var i = 0; i < this.numSmallStars; i++) {
+            var transCoords = camera.transform(this.x + this.smallStars[i].x, this.y + this.smallStars[i].y);
+            ctx.fillStyle = "white";
             ctx.fillRect(transCoords[0], transCoords[1], this.smallStarWidth, this.largeStarWidth);
         }
-        for(var i = 0; i < numSmallStars; i++) {
-            
+        // Draw a yellow rectangle for each large star
+        for(var i = 0; i < this.numLargeStars; i++) {
+            var transCoords = camera.transform(this.x + this.bigStars[i].x, this.y + this.bigStars[i].y);
+            ctx.fillStyle = "yellow";
+            ctx.fillRect(transCoords[0], transCoords[1], this.largeStarWidth, this.largeStarWidth);
         }
-        var transCoords = camera.transform(this.x, this.y);
-        ctx.rect(transCoords[0], transCoords[1], )
     }
 }
 
