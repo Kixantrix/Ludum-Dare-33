@@ -3,7 +3,7 @@
 var Ball = require('./ball');
 
 function Player(x, y, camera, canvas) {
-	Ball.apply(this, x, y);
+	Ball.apply(this, [x, y]);
 	this.x = x;
 	this.y = y;
 	this.angle = 0;
@@ -37,8 +37,8 @@ Player.prototype.thrust = function(accel) {
 	var newVel = Math.sqrt(Math.pow(newVelX, 2) + Math.pow(newVelY, 2));
 	var oldVel = Math.sqrt(Math.pow(this.velX, 2) + Math.pow(this.velY, 2));
 	if((newVel < this.maxVel) || (newVel < oldVel)) {
-		this.velX += newVelX;
-		this.velY -= newVelY;
+		this.velX = newVelX;
+		this.velY = newVelY;
 	}
 	// Thrust has been applied
 	return true;
