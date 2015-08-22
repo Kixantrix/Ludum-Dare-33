@@ -3,6 +3,7 @@
 var canvas;
 var ctx;
 
+// Dynamic resize of canvas
 window.onload = function () {
 	canvas = document.getElementById('game-canvas');
 	canvas.width = window.innerWidth;
@@ -10,10 +11,44 @@ window.onload = function () {
 	console.log(canvas);
 };
 
+// Dynamic resize of canvas
 window.onresize = function() {
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
+    if(window.innerWidth >= 500 && window.innerHeight >= 500) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;    
+    } else {
+	   canvas.width = 500;
+	   canvas.height = 500;
+    }
 };
+
+var FPS = 30;
+var spf = 1000.0 / FPS
+    // Draw Loop
+    setInterval(function() {
+      update();
+      draw();
+  }, spf);
+
+// Update information for 
+function update() {
+}
+
+// Drawing function
+function draw() {
+    drawBackground();
+    drawChars();
+}
+
+// Draw background assets
+function drawBackground() {
+
+}
+
+// Draw characters
+function drawChars() {
+
+}
 
 // Camera for game, used to transform draw calls for different perspectives of the map
 function camera(x, y, z) {
