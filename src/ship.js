@@ -35,12 +35,24 @@ Ship.prototype = Ball.prototype;
 Ship.prototype.constructor = Ship;
 
 Ship.prototype.thrust = function(accel) {
-	this.velX += Math.sin(this.angle) * accel;
-	this.velY -= Math.cos(this.angle) * accel;
+	var newVelX = this.velX + Math.sin(this.angle) * accel;
+	var newVelY = this.velY - Math.cos(this.angle) * accel;
+	var newVel = Math.sqrt(Math.pow(newVelX, 2) + Math.pow(newVelY, 2));
+	var oldVel = Math.sqrt(Math.pow(this.velX, 2) + Math.pow(this.velY, 2));
+	if((newVel < this.maxVel) || (newVel < oldVel)) {
+		this.velX = newVelX;
+		this.velY = newVelY;
+	}
+	// Thrust has been applied
+	return true;
 }
 
 Ship.prototype.thrustAccel = function(accel) {
-	this.rotation += accel;
+
+	if(Math.abs(this.rotation + accel) < this.maxRotationSpeed) {
+		this.rotation += accel;
+	}
+	return true;
 }
 
 
