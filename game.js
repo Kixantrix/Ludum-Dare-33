@@ -1,10 +1,12 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 "use strict";
 
+var Player = require('./player');
+
 var canvas;
 var ctx;
 var camera;
-var paused = false;
+window.paused = false;
 var player;
 
 var DEFAULT_DEPTH = 1;
@@ -37,7 +39,7 @@ var FPS = 30;
 var step = 1000.0 / FPS
     // Draw Loop
     setInterval(function() {
-    	if (paused) return;
+    	if (window.paused) return;
       update();
       draw();
   }, step);
@@ -70,16 +72,13 @@ function drawBackground() {
 
 // Draw characters
 function drawChars() {
-	ctx.drawImage.apply(ctx, [player.image].concat(camera.transform(player.x, player.y)));
+    player.draw(ctx, camera);
 }
 
 // Background object
 function Background() {
     this.default_width = 2000;
     this.default_height = 2000;
-
-    this.starFields = {}
-
 
 
     this.draw = function(camera) {
@@ -90,45 +89,18 @@ function Background() {
 }
 
 // A field of stars as one chunk of width and height
-function StarField(width, height, smallStarWidth, largeStarWidth, numSmallStars, numBigStars) {
-    // Arrays of stars
+function StarField(width, height, numSmallStars, numBigStars) {
     this.bigStars = [];
     this.smallStars = [];
 
-    // Width of the entire field
-    this.width = width;
-    this.height = height;
+    for(var i; i < numSmallStars; i++) {
 
-    // Width of each kind of star
-    this.smallStarWidth = smallStarWidth;
-    this.largeStarWidth = largeStarWidth;
-
-    // Gen small stars coords
-    for(var i; i < numBigStars; i++) {
-        x = Math.floor(Math.Random() * width);
-        y = Math.floor(Math.Random() * height);
-        bigStars.add(new Point(x, y));
     }
 
-    // Gen large stars coords
-    for(var i; i < numSmallStars; i++) {   
-        x = Math.floor(Math.Random() * width);
-        y = Math.floor(Math.Random() * height);
-        smallStars.add(new Point(x, y));
-    }
-    
-    this.draw = function() {
+    for(var i; i < numSmallStars; i++) {
         
     }
 
-}
-
-function Player(x, y) {
-	this.x = x;
-	this.y = y;
-
-	this.image = new Image();
-	this.image.src = "images/player_ship.png";
 }
 
 // Camera for game, used to transform draw calls for different perspectives of the map
@@ -190,4 +162,17 @@ function point(x, y) {
     this.y = y;
 }
 
+},{"./player":2}],2:[function(require,module,exports){
+function Player(x, y) {
+	this.x = x;
+	this.y = y;
+
+	this.image = new Image();
+	this.image.src = "images/player_ship.png";
+	this.draw = function (ctx, camera) {
+		ctx.drawImage.apply(ctx, [this.image].concat(camera.transform(this.x, this.y)));
+	}
+}
+
+module.exports = Player;
 },{}]},{},[1]);

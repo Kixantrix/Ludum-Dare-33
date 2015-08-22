@@ -1,9 +1,11 @@
 "use strict";
 
+var Player = require('./player');
+
 var canvas;
 var ctx;
 var camera;
-var paused = false;
+window.paused = false;
 var player;
 
 var DEFAULT_DEPTH = 1;
@@ -36,7 +38,7 @@ var FPS = 30;
 var step = 1000.0 / FPS
     // Draw Loop
     setInterval(function() {
-    	if (paused) return;
+    	if (window.paused) return;
       update();
       draw();
   }, step);
@@ -69,7 +71,7 @@ function drawBackground() {
 
 // Draw characters
 function drawChars() {
-	ctx.drawImage.apply(ctx, [player.image].concat(camera.transform(player.x, player.y)));
+    player.draw(ctx, camera);
 }
 
 // Background object
@@ -98,14 +100,6 @@ function StarField(width, height, numSmallStars, numBigStars) {
         
     }
 
-}
-
-function Player(x, y) {
-	this.x = x;
-	this.y = y;
-
-	this.image = new Image();
-	this.image.src = "images/player_ship.png";
 }
 
 // Camera for game, used to transform draw calls for different perspectives of the map
