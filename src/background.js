@@ -1,5 +1,5 @@
 "use strict";
-var Player = require('./main');
+var Point = require('./point');
 
 // Background object
 function Background() {
@@ -10,31 +10,34 @@ function Background() {
 
     // Draws background made up of fields
     this.draw = function(camera, ctx) {
-        fields = findFields(camera);
-        for(int i = 0; i < fields.length; i++) {
+        var fields = this.findFields(camera);
+        for(var i = 0; i < fields.length; i++) {
             fields[i].draw(camera, ctx);
         }
     }
 
-    // Finds all fields viewable by camera
+    // Returns array of all fields viewable by camera
     this.findFields = function(camera) {
-        canvas = document.getElementById('game-canvas');
+        var canvas = document.getElementById('game-canvas');
         var edges = [];
         for(var i = 0; i < Math.floor(canvas.width / this.default_width + 1); i++) {
             for(var j = 0; j < Math.floor(canvas.height / this.default_width + 1); j++) {
-                edges.add(this.getStarField(Math.floor((camera.x - 1000)); 
+                edges.push(this.getStarField(Math.floor((camera.x) / 2000) + i * 2000,
+                    Math.floor((camera.y) / 2000)) + j * 2000);
             }
         }
-        var bottom = this.getStarField(camera.x )
+        console.log(edges)
+        return edges;
     }
 
     // Retreives starfield at x, y coordinate
     this.getStarField = function(x, y) {
         var key = x + " " + y;
-        if (!starFields[key]) {
-            starFields[key] = new StarField(x, y, this.default_width, this.default_height, 5, 15, 200, 50);
+        if (!this.starFields[key]) {
+            this.starFields[key] = new StarField(x, y, this.default_width, this.default_height, 5, 15, 200, 50);
         }
-        return starFields[key];
+        console.log(this.starFields[key]);
+        return this.starFields[key];
     }
 
 
@@ -58,16 +61,16 @@ function StarField(x, y, width, height, smallStarWidth, largeStarWidth, numSmall
 
     // Gen small stars coords
     for(var i = 0; i < numBigStars; i++) {
-        x = Math.floor(Math.Random() * this.width) - this.width;
-        y = Math.floor(Math.Random() * this.height) - this.height;
-        bigStars.add(new Point(x, y));
+        var x = Math.floor(Math.random() * this.width) - this.width;
+        var y = Math.floor(Math.random() * this.height) - this.height;
+        this.bigStars.push(new Point(x, y));
     }
 
     // Gen large stars coords
     for(var i = 0; i < numSmallStars; i++) {   
-        x = Math.floor(Math.Random() * this.width);
-        y = Math.floor(Math.Random() * this.height);
-        smallStars.add(new Point(x, y));
+        var x = Math.floor(Math.random() * this.width);
+        var y = Math.floor(Math.random() * this.height);
+        this.smallStars.push(new Point(x, y));
     }
     
     // Draw the field
