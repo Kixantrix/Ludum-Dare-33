@@ -13,7 +13,7 @@ function Player(x, y, camera, canvas) {
 	this.velX = 0;
 	this.velY = 0;
 	// Max linear velocity of ship (x and y hypotenuse)
-	this.maxVel = 40;
+	this.maxVel = 5;
 
 	this.rotation = 0;
 	// Max rotation speed of ship
@@ -69,7 +69,7 @@ Player.prototype.update = function(input) {
 	}
 
 	if (input.keys[83]) {//S
-		thrustApplied = this.thrust(1);
+		thrustApplied = this.thrust(-1);
 	}
 
 	if(!thrustApplied) {
