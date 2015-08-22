@@ -1,6 +1,9 @@
 "use strict";
 
-function Player(x, y, camera, canvas) {
+var Ball = require('./ball');
+
+function Player = (x, y, camera, canvas) {
+	Ball.apply(this, x, y);
 	this.x = x;
 	this.y = y;
 	this.angle = 0;
@@ -23,6 +26,9 @@ function Player(x, y, camera, canvas) {
 	this.radius = 24;
 
 }
+
+Player.prototype = Ball.prototype;
+Player.prototype.constructor = Player;
 
 Player.prototype.thrust = function(accel) {
 	this.velX += Math.sin(this.angle) * accel;
