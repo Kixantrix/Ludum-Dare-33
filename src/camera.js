@@ -1,5 +1,5 @@
 "use strict";
-var point = require('./point');
+var Point = require('./point')['Point'];
 
 var DEFAULT_DEPTH = 1;
 
@@ -19,7 +19,7 @@ function Camera(x, y, z, canvas) {
 
     // Retreives original coordinates before transformation 
     this.antiTransform = function(x, y) {
-    	return new point((x - this.x) / this.getZScale(), (y - this.y) / this.getZScale());
+    	return new Point((x - this.x) / this.getZScale(), (y - this.y) / this.getZScale());
     }  
 
     this.applyTransform = function(ctx) {

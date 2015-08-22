@@ -25,6 +25,9 @@ function Player(x, y, camera, canvas) {
 	this.height = 64;
 	this.radius = 24;
 
+	this.image.width = this.width;
+	this.image.height = this.height;
+
 	this.name = "Player";
 }
 

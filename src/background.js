@@ -1,5 +1,5 @@
 "use strict";
-var Point = require('./point');
+var Point = require('./point')['Point'];
 
 // Background object
 function Background() {

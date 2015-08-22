@@ -1,10 +1,10 @@
 "use strict";
 
 var Ball = require('./ball');
-var xPlusYDistance = require('./xPlusYDistance');
+var xPlusYDistance = require('./point')['xPlusYDistance'];
 
-function Ship = (x, y, camera, canvas, src) {
-	Ball.apply(this, x, y);
+function Ship(x, y, camera, canvas, src) {
+	Ball.apply(this, [x, y]);
 	this.x = x;
 	this.y = y;
 	this.angle = 0;
@@ -14,24 +14,27 @@ function Ship = (x, y, camera, canvas, src) {
 	this.velX = 0;
 	this.velY = 0;
 	// Max linear velocity of ship (x and y hypotenuse)
-	this.maxVel = 40;
+	this.maxVel = 5;
 
 	this.rotation = 0;
 	// Max rotation speed of ship
 	this.maxRotationSpeed = 0.2;
-
-	this.image = new Image();
-	this.image.src = src;
 	this.width = 64;
 	this.height = 64;
 	this.radius = 24;
+
+	this.image = new Image();
+	this.image.src = src;
+	this.image.width = this.width;
+	this.image.height = this.height;
+	
 
 	this.enemies = {}
 	this.enemies['Player'] = true;
 	this.name = "Enemy"
 }
 
-Ship.prototype = Ball.prototype;
+Ship.prototype = Object.create(Ball.prototype);
 Ship.prototype.constructor = Ship;
 
 Ship.prototype.thrust = function(accel) {
@@ -148,9 +151,6 @@ Ship.prototype.update = function(objects) {
 	this.x += this.velX;
 	this.y += this.velY;
 	this.angle += this.rotation;
-
-	this.camera.x = -(this.x - this.canvas.width / 2 - this.width / 2);
-	this.camera.y = -(this.y - this.canvas.height / 2 - this.height / 2);
 };
 
 Ship.prototype.draw = function (ctx, camera) {

@@ -3,9 +3,10 @@
 var Player = require('./player');
 var Ball = require('./ball');
 var Camera = require('./camera');
-var Point = require('./point');
+var Point = require('./point')['Point'];
 var Background = require('./background');
 var Input = require('./input');
+var Ship = require('./ship');
 
 var canvas;
 var ctx;
@@ -13,6 +14,7 @@ var camera;
 var background;
 window.paused = false;
 var player;
+var enemy;
 var ball;
 var input;
 
@@ -29,6 +31,7 @@ window.onload = function () {
 	player = new Player(50, 50, camera, canvas);
     ball = new Ball(200, 200);
     input = new Input(canvas);
+    enemy = new Ship(500, 500, camera, canvas, "images/spaceships/alienspaceship.png");
     background = new Background();
 };
 
@@ -57,9 +60,10 @@ function update() {
     if (input.keys[27]) {//ESC
         paused = true;
     }
+    var objects = [player, ball, enemy]
     player.update(input);
-
-    doCollisions([player, ball]);
+    enemy.update(objects);
+    doCollisions(objects);
 }
 
 function doCollisions(objects) {
@@ -177,4 +181,5 @@ function drawBackground() {
 function drawChars() {
     player.draw(ctx, camera);
     ball.draw(ctx, camera);
+    enemy.draw(ctx, camera);
 }
