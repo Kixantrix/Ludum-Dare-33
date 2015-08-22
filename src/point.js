@@ -1,7 +1,7 @@
 "use strict";
 
 // Creates a point
-function point(x, y) {
+function Point(x, y) {
     this.x = x;
     this.y = y;
 }
