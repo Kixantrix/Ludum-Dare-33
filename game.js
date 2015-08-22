@@ -23,12 +23,12 @@ window.onresize = function() {
 };
 
 var FPS = 30;
-var spf = 1000.0 / FPS
+var step = 1000.0 / FPS
     // Draw Loop
     setInterval(function() {
       update();
       draw();
-  }, spf);
+  }, step);
 
 // Update information for 
 function update() {
