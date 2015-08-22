@@ -72,37 +72,10 @@ function drawChars() {
 	ctx.drawImage.apply(ctx, [player.image].concat(camera.transform(player.x, player.y)));
 }
 
-// Background object
-function Background() {
-    this.default_width = 2000;
-    this.default_height = 2000;
-
-
-    this.draw = function(camera) {
-
-    }
-
-
-}
-
-// A field of stars as one chunk of width and height
-function StarField(width, height, numSmallStars, numBigStars) {
-    this.bigStars = [];
-    this.smallStars = [];
-
-    for(var i; i < numSmallStars; i++) {
-
-    }
-
-    for(var i; i < numSmallStars; i++) {
-        
-    }
-
-}
-
 function Player(x, y) {
 	this.x = x;
 	this.y = y;
+    this.rotation = 0;
 
 	this.image = new Image();
 	this.image.src = "images/player_ship.png";
