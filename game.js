@@ -17,8 +17,8 @@ window.onresize = function() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;    
     } else {
-	   canvas.width = 500;
-	   canvas.height = 500;
+        canvas.width = 500;
+        canvas.height = 500;
     }
 };
 
@@ -47,6 +47,11 @@ function drawBackground() {
 
 // Draw characters
 function drawChars() {
+
+}
+
+// Background object
+function background() {
 
 }
 
@@ -87,4 +92,10 @@ function camera(x, y, z) {
     this.moveZ = function(z) {
     	this.z = z;
     }
+}
+
+// Creates a point
+function point(x, y) {
+    this.x = x;
+    this.y = y;
 }
