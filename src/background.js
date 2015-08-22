@@ -5,7 +5,11 @@ function Background() {
 
     this.starFields = {}
 
-    this.draw = function(camera) {
+    this.draw = function(camera, ctx) {
+
+    }
+
+    this.findEdges = function(camera) {
 
     }
 
@@ -13,7 +17,9 @@ function Background() {
 }
 
 // A field of stars as one chunk of width and height
-function StarField(width, height, smallStarWidth, largeStarWidth, numSmallStars, numBigStars) {
+function StarField(x, y, width, height, smallStarWidth, largeStarWidth, numSmallStars, numBigStars) {
+    this.x = x;
+    this.y = y;
     // Arrays of stars
     this.bigStars = [];
     this.smallStars = [];
@@ -40,7 +46,7 @@ function StarField(width, height, smallStarWidth, largeStarWidth, numSmallStars,
         smallStars.add(new Point(x, y));
     }
     
-    this.draw = function() {
+    this.draw = function(camera, ctx) {
 
     }
 }
