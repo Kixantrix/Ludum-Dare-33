@@ -20,7 +20,11 @@ function Player(x, y, camera, canvas) {
 	this.image.src = "images/player_ship.png";
 	this.width = 64;
 	this.height = 64;
+<<<<<<< HEAD
 
+=======
+	this.radius = 24;
+>>>>>>> origin/master
 }
 
 Player.prototype.thrust = function(accel) {
