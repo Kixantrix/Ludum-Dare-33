@@ -20,7 +20,13 @@ function Camera(x, y, z, canvas) {
     // Retreives original coordinates before transformation 
     this.antiTransform = function(x, y) {
     	return new point((x - this.x) / this.getZScale(), (y - this.y) / this.getZScale());
-    }    
+    }  
+
+    this.applyTransform = function(ctx) {
+        ctx.translate(this.x, this.y);
+        var scale = this.getZScale();
+        ctx.scale(scale, scale);
+    }
 
     // Returns a scaling factor for size of items on 2d plane based on z index.
     this.getZScale = function() {
