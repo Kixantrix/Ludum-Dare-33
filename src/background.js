@@ -57,14 +57,14 @@ function StarField(x, y, width, height, smallStarWidth, largeStarWidth, numSmall
     this.smallStarWidth = smallStarWidth;
     this.largeStarWidth = largeStarWidth;
 
-    // Gen small stars coords
+    // Gen large stars coords
     for(var i = 0; i < numBigStars; i++) {
-        var x = Math.floor(Math.random() * this.width) - this.width;
-        var y = Math.floor(Math.random() * this.height) - this.height;
+        var x = Math.floor(Math.random() * this.width);
+        var y = Math.floor(Math.random() * this.height);
         this.bigStars.push(new Point(x, y));
     }
 
-    // Gen large stars coords
+    // Gen small stars coords
     for(var i = 0; i < numSmallStars; i++) {   
         var x = Math.floor(Math.random() * this.width);
         var y = Math.floor(Math.random() * this.height);
