@@ -20,8 +20,8 @@ function Background() {
     this.findFields = function(camera) {
         var canvas = document.getElementById('game-canvas');
         var edges = [];
-        for(var i = Math.floor((camera.x - canvas.width / 2) / 2000); i < Math.floor((camera.x + canvas.width / 2) / 2000 + 1); i++) {
-            for(var j = Math.floor((camera.y - canvas.height / 2) / 2000); j < Math.floor((camera.y + canvas.height / 2) / 2000 + 1); j++) {
+        for(var i = Math.floor((-1 * camera.x - canvas.width / 2) / 2000 - 2); i < Math.floor((-1 * camera.x + canvas.width / 2) / 2000 + 2); i++) {
+            for(var j = Math.floor((-1 * camera.y - canvas.height / 2) / 2000 - 2); j < Math.floor((-1 * camera.y + canvas.height / 2) / 2000 + 2); j++) {
                 edges.push(this.getStarField(i * 2000,
                     j * 2000));
             }
@@ -73,15 +73,14 @@ function StarField(x, y, width, height, smallStarWidth, largeStarWidth, numSmall
     
     // Draw the field
     this.draw = function(camera, ctx) {
-        console.log("x: " + camera.x + " " + this.x + " " + "y: " + camera.y + " " + this.y);
         // Draw a white rectangle for each small star
-        for(var i = 0; i < this.numSmallStars; i++) {
+        for(var i = 0; i < this.smallStars.length; i++) {
             var transCoords = camera.transform(this.x + this.smallStars[i].x, this.y + this.smallStars[i].y);
             ctx.fillStyle = "white";
-            ctx.fillRect(transCoords[0], transCoords[1], this.smallStarWidth, this.largeStarWidth);
+            ctx.fillRect(transCoords[0], transCoords[1], this.smallStarWidth, this.smallStarWidth);
         }
         // Draw a yellow rectangle for each large star
-        for(var i = 0; i < this.numLargeStars; i++) {
+        for(var i = 0; i < this.bigStars.length; i++) {
             var transCoords = camera.transform(this.x + this.bigStars[i].x, this.y + this.bigStars[i].y);
             ctx.fillStyle = "yellow";
             ctx.fillRect(transCoords[0], transCoords[1], this.largeStarWidth, this.largeStarWidth);
