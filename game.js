@@ -75,34 +75,6 @@ function drawChars() {
     player.draw(ctx, camera);
 }
 
-// Background object
-function Background() {
-    this.default_width = 2000;
-    this.default_height = 2000;
-
-
-    this.draw = function(camera) {
-
-    }
-
-
-}
-
-// A field of stars as one chunk of width and height
-function StarField(width, height, numSmallStars, numBigStars) {
-    this.bigStars = [];
-    this.smallStars = [];
-
-    for(var i; i < numSmallStars; i++) {
-
-    }
-
-    for(var i; i < numSmallStars; i++) {
-        
-    }
-
-}
-
 // Camera for game, used to transform draw calls for different perspectives of the map
 function Camera(x, y, z) {
 	this.x = x;

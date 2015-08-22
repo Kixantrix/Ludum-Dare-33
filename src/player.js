@@ -5,7 +5,8 @@ function Player(x, y) {
 	this.image = new Image();
 	this.image.src = "images/player_ship.png";
 	this.draw = function (ctx, camera) {
-		ctx.drawImage.apply(ctx, [this.image].concat(camera.transform(this.x, this.y)));
+		ctx.drawImage.apply(ctx, 
+			[this.image].concat(camera.transform(this.x, this.y)));
 	}
 }
 
