@@ -21,9 +21,9 @@ Ball.prototype.draw = function(ctx, camera) {
 	ctx.translate(this.x, this.y);
 	ctx.rotate(this.angle);
 
-	ctx.beginPath()
+	ctx.beginPath();
 	ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
-	ctx.stroke()
+	ctx.stroke();
 	ctx.restore();
 };
 
