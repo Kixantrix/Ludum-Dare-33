@@ -73,7 +73,7 @@ function StarField(x, y, width, height, smallStarWidth, largeStarWidth, numSmall
     
     // Draw the field
     this.draw = function(camera, ctx) {
-        console.log("x: " + camera.x + " " + this.x + " " + "y: " + camera.y + " " + this.y);
+        //console.log("x: " + camera.x + " " + this.x + " " + "y: " + camera.y + " " + this.y);
         // Draw a white rectangle for each small star
         for(var i = 0; i < this.numSmallStars; i++) {
             var transCoords = camera.transform(this.x + this.smallStars[i].x, this.y + this.smallStars[i].y);

@@ -9,7 +9,7 @@ function Input(canvas) {
 
 Input.prototype.onkeydown = function(e) {
 	this.keys[e.keyCode] = true;
-	console.log(this.keys);
+	//console.log(this.keys);
 }
 
 Input.prototype.onkeyup = function(e) {

@@ -1,6 +1,7 @@
 "use strict";
 
 var Player = require('./player');
+var Ball = require('./ball');
 var Camera = require('./camera');
 var Point = require('./point');
 var Background = require('./background');
@@ -12,6 +13,7 @@ var camera;
 var background;
 window.paused = false;
 var player;
+var ball;
 var input;
 
 // Dynamic resize of canvas
@@ -25,6 +27,7 @@ window.onload = function () {
 	camera = new Camera(0, 0, 1, canvas);
 
 	player = new Player(50, 50, camera, canvas);
+    ball = new Ball(200, 200);
     input = new Input(canvas);
     background = new Background();
 };
@@ -51,7 +54,45 @@ var step = 1000.0 / FPS
 
 // Update information for 
 function update() {
+    if (input.keys[27]) {//ESC
+        paused = true;
+    }
     player.update(input);
+
+    doCollisions([player, ball]);
+}
+
+function doCollisions(objects) {
+    for (var i = 0; i < objects.length; i++) {
+        for (var j = i + 1; j < objects.length; j++) {
+            var dx = objects[j].x - objects[i].x;
+            var dy = objects[j].y - objects[i].y;
+
+            var dvx = objects[j].velX - objects[i].velX;
+            var dvy = objects[j].velY - objects[j].velY;
+
+            var ri = objects[i].radius;
+            var rj = objects[j].radius;
+            var r = ri + rj;
+
+            var b = 2 * (dvx * dx + dvy * dy);
+            if (b > 0) {
+                continue;
+            }
+
+            var a = (dvx * dvx + dvy * dvy);
+            var c = (dx * dx + dy * dy - r * r);
+
+            var discriminant = b * b - 4 * a * c;
+            if (discriminant < 0) {
+                continue;
+            }
+
+            var t = (-b - Math.sqrt(discriminant)) / 2 / a;
+            if (t < 1 && t > 0)
+                console.log("THERE WILL BE A COLLISION");
+        }
+    }
 }
 
 // Drawing function
@@ -82,4 +123,5 @@ function drawBackground() {
 // Draw characters
 function drawChars() {
     player.draw(ctx, camera);
+    ball.draw(ctx, camera);
 }
