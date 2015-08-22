@@ -3,15 +3,18 @@
 function Player(x, y, camera, canvas) {
 	this.x = x;
 	this.y = y;
+	this.angle = 0;
 	this.camera = camera;
 	this.canvas = canvas;
 
 	this.velX = 0;
 	this.velY = 0;
-	this.angle = 0;
+	this.rotation = 0;
 
 	this.image = new Image();
 	this.image.src = "images/player_ship.png";
+	this.width = 64;
+	this.height = 64;
 }
 
 Player.prototype.thrust = function(accel) {
@@ -19,12 +22,16 @@ Player.prototype.thrust = function(accel) {
 	this.velY -= Math.cos(this.angle) * accel;
 }
 
+Player.prototype.thrustAccel = function(accel) {
+	this.rotation += accel;
+}
+
 Player.prototype.update = function(input) {
 	if (input.keys[68]) {//D
-		this.angle += 0.1;
+		this.thrustAccel(0.01);
 	}
 	if (input.keys[65]) {//A
-		this.angle -= 0.1;
+		this.thrustAccel(-0.01);
 	}
 	if (input.keys[87]) {//W
 		this.thrust(1)
@@ -35,19 +42,20 @@ Player.prototype.update = function(input) {
 
 	this.x += this.velX;
 	this.y += this.velY;
+	this.angle += this.rotation;
 
-	this.camera.x = -(this.x - this.canvas.width / 2);
-	this.camera.y = -(this.y - this.canvas.height / 2);
+	this.camera.x = -(this.x - this.canvas.width / 2 - this.width / 2);
+	this.camera.y = -(this.y - this.canvas.height / 2 - this.height / 2);
 };
 
 Player.prototype.draw = function (ctx, camera) {
 	ctx.save();
 
 	camera.applyTransform(ctx);
-	ctx.translate(this.x, this.y)
+	ctx.translate(this.x, this.y);
 	ctx.rotate(this.angle);
 
-	ctx.drawImage(this.image, 0, 0);
+	ctx.drawImage(this.image, -this.width / 2, -this.height / 2);
 	ctx.restore();
 }
 
