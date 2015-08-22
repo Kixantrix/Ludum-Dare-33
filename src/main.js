@@ -55,6 +55,7 @@ function update() {
 // Drawing function
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath()
     drawBackground();
     drawChars();
 }
