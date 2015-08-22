@@ -2,20 +2,27 @@
 
 var canvas;
 var ctx;
+var camera;
+var paused = false;
+
+var DEFAULT_DEPTH = 1;
 
 // Dynamic resize of canvas
 window.onload = function () {
 	canvas = document.getElementById('game-canvas');
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
+	canvas.width = window.innerWidth - 10;
+	canvas.height = window.innerHeight - 10;
 	console.log(canvas);
+	ctx = canvas.getContext("2d");
+
+	camera = new Camera(0, 0, 1);
 };
 
 // Dynamic resize of canvas
 window.onresize = function() {
     if(window.innerWidth >= 500 && window.innerHeight >= 500) {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;    
+        canvas.width = window.innerWidth - 10;
+        canvas.height = window.innerHeight - 10;    
     } else {
         canvas.width = 500;
         canvas.height = 500;
@@ -26,6 +33,7 @@ var FPS = 30;
 var step = 1000.0 / FPS
     // Draw Loop
     setInterval(function() {
+    	if (paused) return;
       update();
       draw();
   }, step);
@@ -42,6 +50,17 @@ function draw() {
 
 // Draw background assets
 function drawBackground() {
+	for (var x = camera.left(); x < camera.right(); x += 40) {
+		ctx.moveTo.apply(ctx, camera.transform(x, camera.top()));
+		ctx.lineTo.apply(ctx, camera.transform(x, camera.bottom()));
+	}
+	for (var y = camera.top(); y < camera.bottom(); y += 40) {
+		ctx.moveTo.apply(ctx, camera.transform(camera.left(), y));
+		ctx.lineTo.apply(ctx, camera.transform(camera.right(), y));
+	}
+	ctx.strokeStyle = "#eee";
+	ctx.stroke();
+
 
 }
 
@@ -56,7 +75,7 @@ function background() {
 }
 
 // Camera for game, used to transform draw calls for different perspectives of the map
-function camera(x, y, z) {
+function Camera(x, y, z) {
 	this.x = x;
 	this.y = y;
 	this.z = z;
@@ -64,8 +83,8 @@ function camera(x, y, z) {
     // Applies camera transformations from x y positions to camera
     // Positions
     this.transform = function(x, y) {
-    	return new point(x * this.getZScale() + this.x, 
-    		y * this.getZScale() + this.y);
+    	return [x * this.getZScale() + this.x, 
+    		y * this.getZScale() + this.y];
     }
 
     // Retreives original coordinates before transformation 
@@ -91,6 +110,20 @@ function camera(x, y, z) {
     // Changes Z position
     this.moveZ = function(z) {
     	this.z = z;
+    }
+
+    this.left = function() {
+    	return this.x;
+    }
+    this.right = function() {
+    	return this.x + canvas.width / this.getZScale();
+    }
+    this.top = function() {
+    	return this.y;
+    }
+
+    this.bottom = function() {
+    	return this.y + canvas.height / this.getZScale();
     }
 }
 
