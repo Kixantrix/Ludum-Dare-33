@@ -9,7 +9,18 @@ function Player(x, y) {
 }
 
 Player.prototype.update = function(input) {
-	//console.log(input.keys);
+	if (input.keys[68]) {
+		this.x += 5;
+	}
+	if (input.keys[65]) {
+		this.x -= 5;
+	}
+	if (input.keys[87]) {
+		this.y -= 5;
+	}
+	if (input.keys[83]) {
+		this.y += 5;
+	}
 };
 
 Player.prototype.draw = function (ctx, camera) {
