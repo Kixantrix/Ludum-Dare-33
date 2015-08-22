@@ -4,12 +4,14 @@ var Player = require('./player');
 var Camera = require('./camera');
 var Point = require('./point');
 var Background = require('./background');
+var Input = require('./input');
 
 var canvas;
 var ctx;
 var camera;
 window.paused = false;
 var player;
+var input;
 
 // Dynamic resize of canvas
 window.onload = function () {
@@ -22,6 +24,7 @@ window.onload = function () {
 	camera = new Camera(0, 0, 1, canvas);
 
 	player = new Player(50, 50);
+    input = new Input(canvas);
 };
 
 // Dynamic resize of canvas
@@ -46,6 +49,7 @@ var step = 1000.0 / FPS
 
 // Update information for 
 function update() {
+    player.update(input);
 }
 
 // Drawing function
