@@ -9,6 +9,7 @@ var Input = require('./input');
 var canvas;
 var ctx;
 var camera;
+var background;
 window.paused = false;
 var player;
 var input;
@@ -25,6 +26,7 @@ window.onload = function () {
 
 	player = new Player(50, 50, camera, canvas);
     input = new Input(canvas);
+    background = new Background();
 };
 
 // Dynamic resize of canvas
@@ -72,6 +74,7 @@ function drawBackground() {
 	}
 	ctx.strokeStyle = "#eee";
 	ctx.stroke();
+    background.draw(camera, ctx);
 
 
 }

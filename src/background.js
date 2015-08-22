@@ -12,7 +12,7 @@ function Background() {
     this.draw = function(camera, ctx) {
         var fields = this.findFields(camera);
         for(var i = 0; i < fields.length; i++) {
-            fields[i].draw(camera, ctx);
+            (fields[i].draw)(camera, ctx);
         }
     }
 
@@ -20,13 +20,12 @@ function Background() {
     this.findFields = function(camera) {
         var canvas = document.getElementById('game-canvas');
         var edges = [];
-        for(var i = 0; i < Math.floor(canvas.width / this.default_width + 1); i++) {
-            for(var j = 0; j < Math.floor(canvas.height / this.default_width + 1); j++) {
-                edges.push(this.getStarField(Math.floor((camera.x) / 2000) + i * 2000,
-                    Math.floor((camera.y) / 2000)) + j * 2000);
+        for(var i = Math.floor((camera.x - canvas.width / 2) / 2000); i < Math.floor((camera.x + canvas.width / 2) / 2000 + 1); i++) {
+            for(var j = Math.floor((camera.y - canvas.height / 2) / 2000); j < Math.floor((camera.y + canvas.height / 2) / 2000 + 1); j++) {
+                edges.push(this.getStarField(i * 2000,
+                    j * 2000));
             }
         }
-        console.log(edges)
         return edges;
     }
 
@@ -36,7 +35,6 @@ function Background() {
         if (!this.starFields[key]) {
             this.starFields[key] = new StarField(x, y, this.default_width, this.default_height, 5, 15, 200, 50);
         }
-        console.log(this.starFields[key]);
         return this.starFields[key];
     }
 
@@ -75,6 +73,7 @@ function StarField(x, y, width, height, smallStarWidth, largeStarWidth, numSmall
     
     // Draw the field
     this.draw = function(camera, ctx) {
+        console.log("x: " + camera.x + " " + this.x + " " + "y: " + camera.y + " " + this.y);
         // Draw a white rectangle for each small star
         for(var i = 0; i < this.numSmallStars; i++) {
             var transCoords = camera.transform(this.x + this.smallStars[i].x, this.y + this.smallStars[i].y);
