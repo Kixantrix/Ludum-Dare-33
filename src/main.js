@@ -63,36 +63,87 @@ function update() {
 }
 
 function doCollisions(objects) {
-    for (var i = 0; i < objects.length; i++) {
-        for (var j = i + 1; j < objects.length; j++) {
-            var dx = objects[j].x - objects[i].x;
-            var dy = objects[j].y - objects[i].y;
+    var currentT = 0;
+    var minT;
+    var minObject1, minObject2;
+    while (currentT < 1) {
+        minT = 1 - currentT;
+        minObject1 = undefined;
+        minObject2 = undefined;
+        for (var i = 0; i < objects.length; i++) {
+            for (var j = i + 1; j < objects.length; j++) {
+                var dx = objects[j].x - objects[i].x;
+                var dy = objects[j].y - objects[i].y;
 
-            var dvx = objects[j].velX - objects[i].velX;
-            var dvy = objects[j].velY - objects[j].velY;
+                var dvx = objects[j].velX - objects[i].velX;
+                var dvy = objects[j].velY - objects[j].velY;
 
-            var ri = objects[i].radius;
-            var rj = objects[j].radius;
-            var r = ri + rj;
+                var ri = objects[i].radius;
+                var rj = objects[j].radius;
+                var r = ri + rj;
 
-            var b = 2 * (dvx * dx + dvy * dy);
-            if (b > 0) {
-                continue;
+                var b = 2 * (dvx * dx + dvy * dy);
+                if (b > 0) {
+                    continue;
+                }
+
+                var a = (dvx * dvx + dvy * dvy);
+                var c = (dx * dx + dy * dy - r * r);
+
+                var discriminant = b * b - 4 * a * c;
+                if (discriminant < 0) {
+                    continue;
+                }
+
+                var t = (-b - Math.sqrt(discriminant)) / 2 / a;
+                if (t > 1 || t <= 0) continue;
+                //if (t < 1 && t > 0)
+                //    console.log("THERE WILL BE A COLLISION");
+                if (t < minT) {
+                    minT = t;
+                    minObject1 = objects[i];
+                    minObject2 = objects[j];
+                }
             }
+        }
 
-            var a = (dvx * dvx + dvy * dvy);
-            var c = (dx * dx + dy * dy - r * r);
+        console.log(minT, minObject1);
 
-            var discriminant = b * b - 4 * a * c;
-            if (discriminant < 0) {
-                continue;
-            }
-
-            var t = (-b - Math.sqrt(discriminant)) / 2 / a;
-            if (t < 1 && t > 0)
-                console.log("THERE WILL BE A COLLISION");
+        if (minObject1) {
+            moveObjects(objects, minT);
+            currentT += minT;
+            doReaction(minObject1, minObject2);
+        } else {
+            moveObjects(objects, 1 - currentT);
+            currentT += minT;
         }
     }
+}
+
+function moveObjects(objects, t) {
+    for (var i = 0; i < objects.length; i++) {
+        objects[i].x += objects[i].velX * t;
+        objects[i].y += objects[i].velY * t;
+    }
+}
+
+function doReaction(object1, object2) {
+    var dx = object2.x - object1.x;
+    var dy = object2.y - object1.y;
+
+    var dvx = object2.velX - object1.velX;
+    var dvy = object2.velY - object1.velY;
+
+    var vx1 = object1.velX;
+    var vy1 = object1.velY;
+
+    var length = (dvx * dx + dvy * dy);
+    length /= (dx * dx + dy * dy);
+
+    object1.velX += (length) * dx;
+    object1.velY += (length) * dy;
+    object2.velX = vx1 + dvx - (length) * dx;
+    object2.velY = vy1 + dvy - (length) * dy;
 }
 
 // Drawing function

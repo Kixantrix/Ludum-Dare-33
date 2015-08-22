@@ -23,7 +23,8 @@ Ball.prototype.draw = function(ctx, camera) {
 
 	ctx.beginPath();
 	ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
-	ctx.stroke();
+	ctx.fillStyle = 'white';
+	ctx.fill();
 	ctx.restore();
 };
 
