@@ -45,20 +45,27 @@ function StarField(x, y, width, height, smallStarWidth, largeStarWidth, numSmall
     this.largeStarWidth = largeStarWidth;
 
     // Gen small stars coords
-    for(var i; i < numBigStars; i++) {
+    for(var i = 0; i < numBigStars; i++) {
         x = Math.floor(Math.Random() * this.width) - this.width;
         y = Math.floor(Math.Random() * this.height) - this.height;
         bigStars.add(new Point(x, y));
     }
 
     // Gen large stars coords
-    for(var i; i < numSmallStars; i++) {   
+    for(var i = 0; i < numSmallStars; i++) {   
         x = Math.floor(Math.Random() * this.width);
         y = Math.floor(Math.Random() * this.height);
         smallStars.add(new Point(x, y));
     }
     
     this.draw = function(camera, ctx) {
+        for(var i = 0; i < numSmallStars; i++) {
+            var transCoords = camera.transform(this.x + smallStars[i].x, this.y + smallStars[i].y);
+            ctx.fillRect(transCoords[0], transCoords[1], this.smallStarWidth, this.largeStarWidth);
+        }
+        for(var i = 0; i < numSmallStars; i++) {
+            
+        }
         var transCoords = camera.transform(this.x, this.y);
         ctx.rect(transCoords[0], transCoords[1], )
     }
