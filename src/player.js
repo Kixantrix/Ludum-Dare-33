@@ -28,7 +28,7 @@ function Player(x, y, camera, canvas) {
 	this.name = "Player";
 }
 
-Player.prototype = Ball.prototype;
+Player.prototype = Object.create(Ball.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.thrust = function(accel) {
