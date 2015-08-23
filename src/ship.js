@@ -19,7 +19,7 @@ function Ship(x, y, camera, canvas, src) {
 
 	this.rotation = 0;
 	// Max rotation speed of ship
-	this.maxRotationSpeed = 0.2;
+	this.maxRotationSpeed = 0.4;
 	this.width = 128;
 	this.height = 128;
 	this.radius = 128 / 2;
@@ -69,33 +69,76 @@ Ship.prototype.thrustAccel = function(accel) {
 	return true;
 }
 
+function mod(n, k) {
+	return ((n % k) + k) % k;
+}
 
 Ship.prototype.update = function(objects) {
 	var rotationApplied = false;
 	var thrustApplied = false;
 
 	// Find closest enemy
-	var closestEnemy = [];
+	var closestEnemy = {};
 	for(var i = 0; i < objects.length; i++) {
 		if(this.enemies[objects[i].name]) {
 			var distance = xPlusYDistance(objects[i].x, objects[i].y, this.x, this.y);
-			if(!closestEnemy["enemy"] || closestEnemy["distance"] > distance) {
-				closestEnemy["enemy"] = objects[i];
-				closestEnemy["distance"] = distance;
+			if(!closestEnemy.enemy || closestEnemy.distance > distance) {
+				closestEnemy.enemy = objects[i];
+				closestEnemy.distance = distance;
 			}
 		}
 	}
 
 	// Head towards closest enemy is far away
-	if(closestEnemy["enemy"]) {
-		var enemy = closestEnemy["enemy"];
-		if(closestEnemy[distance] < 10) {
+	if(closestEnemy.enemy) {
+		var enemy = closestEnemy.enemy;
+		if(closestEnemy[distance] < 10) { // Back away
 			// RUN AWAY?
 
 		} else {
-			if(this.angle) {
+			var angleDiff;
+			var dx = closestEnemy.enemy.x - this.x;
+			var dy = closestEnemy.enemy.y - this.y;
 
+			var angle = Math.PI / 2 + Math.atan2(dy, dx);
+			var angleDiff = mod((this.angle - angle + Math.PI), (Math.PI * 2)) - Math.PI;
+
+			console.log('angleDiff', angleDiff);
+
+			var decelerateRotation;
+			if (this.rotation !== 0) {
+				decelerateRotation = -this.rotation / Math.abs(this.rotation) * 0.01;
+			} else {
+				decelerateRotation = -0.01;
 			}
+
+			if (this.rotation > 0.1) { //Slow down
+				this.thrustAccel(decelerateRotation);
+				if (Math.abs(angleDiff) < 0.3) this.thrust(0.5);
+				return;
+			} else {
+				var finalAngle = angleDiff - this.rotation * this.rotation / decelerateRotation / 2;
+				finalAngle = mod((finalAngle + Math.PI), (Math.PI * 2)) - Math.PI;
+				console.log('finalAngle', finalAngle);
+				if (finalAngle > Math.PI / 2 || finalAngle < -Math.PI / 2) {
+					if (Math.abs(this.rotation) > 0.05) {
+						this.thrustAccel(decelerateRotation);
+					} else {
+						this.thrustAccel(-angleDiff / Math.abs(angleDiff) * 0.01);
+					}
+				} else if (finalAngle > 0.01) {
+					this.thrustAccel(-0.01);
+					console.log('left');
+				} else if (finalAngle < -0.01) {
+					this.thrustAccel(0.01);
+					console.log('right');
+				} else {
+					if (angleDiff < 0.3 && angleDiff > -0.3)
+						this.thrust(0.5);
+				}
+			}
+
+
 		}
 	}
 
