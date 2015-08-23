@@ -21,12 +21,10 @@ function Ship(x, y, camera, canvas, src) {
 	this.maxRotationSpeed = 0.2;
 	this.width = 64;
 	this.height = 64;
-	this.radius = 24;
+	this.radius = 32;
 
 	this.image = new Image();
 	this.image.src = src;
-	this.image.width = this.width;
-	this.image.height = this.height;
 	
 
 	this.enemies = {}
@@ -87,44 +85,7 @@ Ship.prototype.update = function(objects) {
 			}
 		}
 	}
-/*
-	if (input.keys[68]) {//D
-		if(this.rotation < this.maxRotationSpeed) {
-			this.thrustAccel(0.01);
-			rotationApplied = true;
-		}
-	}
-	if (input.keys[65]) {//A
-		if(this.rotation > -1 * this.maxRotationSpeed) {
-			this.thrustAccel(-0.01);
-			rotationApplied = true;
-		}
-	}
 
-	if (input.keys[87]) {//W
-		var accel = 1;
-		var newVelX = this.velX + Math.sin(this.angle) * accel;
-		var newVelY = this.velY - Math.cos(this.angle) * accel;
-		var newVel = Math.sqrt(Math.pow(newVelX, 2) + Math.pow(newVelY, 2));
-		var oldVel = Math.sqrt(Math.pow(this.velX, 2) + Math.pow(this.velY, 2));
-		if((newVel < this.maxVel) || (newVel < oldVel)) {
-			this.thrust(accel)
-			thrustApplied = true;
-		}
-	}
-
-	if (input.keys[83]) {//S
-		var accel = -1
-		var newVelX = this.velX + Math.sin(this.angle) * accel;
-		var newVelY = this.velY - Math.cos(this.angle) * accel;
-		var newVel = Math.sqrt(Math.pow(newVelX, 2) + Math.pow(newVelY, 2));
-		var oldVel = Math.sqrt(Math.pow(this.velX, 2) + Math.pow(this.velY, 2));
-		if((newVel < this.maxVel) || (newVel < oldVel)) {
-			this.thrust(accel)
-			thrustApplied = true;
-		}
-	}
-*/
 	if(!thrustApplied) {
 		if(this.velX < 0.1 && this.velX > -0.1) {
 			this.velX = 0;
@@ -160,7 +121,7 @@ Ship.prototype.draw = function (ctx, camera) {
 	ctx.translate(this.x, this.y);
 	ctx.rotate(this.angle);
 
-	ctx.drawImage(this.image, -this.width / 2, -this.height / 2);
+	ctx.drawImage(this.image, -this.width / 2, -this.height / 2, this.width, this.height	);
 	ctx.restore();
 }
 
