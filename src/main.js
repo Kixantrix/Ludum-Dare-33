@@ -32,7 +32,7 @@ var asteroid;
 var asteroidField;
 var asteroidRing;
 var planets;
-
+var projectilePool;
 
 // Dynamic resize of canvas
 window.onload = function () {
@@ -60,6 +60,9 @@ window.onload = function () {
     planets[4] = new Planet(2000, 1700, 600, "images/planets/p3shaded.png", true);
     planets[5] = new Planet(1500, -1500, 950, "images/planets/p4shaded.png", false);
 
+    var ProjectilePool = require('./projectilePool');
+    projectilePool = new ProjectilePool();
+    globals.projectilePool = projectilePool;
     initializeObjectBoxes([player, ball, enemy, asteroid].concat(asteroidField.asteroids).concat(asteroidRing.asteroids));
 };
 
@@ -99,6 +102,7 @@ function update() {
     var objects = [player, ball, enemy, asteroid]
     objects = objects.concat(asteroidField.asteroids);
     objects = objects.concat(asteroidRing.asteroids);
+    objects.concat(projectilePool.projectiles);
     player.update(input);
     enemy.update(objects);
     asteroid.update();
@@ -264,4 +268,5 @@ function drawChars() {
     player.draw(ctx, camera);
     ball.draw(ctx, camera);
     enemy.draw(ctx, camera);
+    projectilePool.draw(ctx, camera);
 }

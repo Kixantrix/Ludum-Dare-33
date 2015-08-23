@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = {
-	boxSize: 200
+	boxSize: 400
 };

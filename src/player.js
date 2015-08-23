@@ -1,6 +1,9 @@
 "use strict";
 
 var Ball = require('./ball');
+
+var globals = require('./globals');
+var Projectile = require('./projectile');
 var Ship = require('./ship');
 
 function Player(x, y, camera, canvas) {
@@ -32,6 +35,11 @@ Player.prototype.update = function(input) {
 	if (input.keys[83]) {//S
 		thrustApplied = this.thrust(-1);
 	}
+
+	if (input.keys[32]) {// space
+		new Projectile(this.x, this.y,
+			Math.sin(this.angle) * 10, Math.cos(this.angle) * 10, globals.projectilePool);
+	}	
 
 	if(!thrustApplied) {
 		if(this.velX < 0.1 && this.velX > -0.1) {

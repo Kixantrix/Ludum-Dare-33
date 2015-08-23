@@ -16,9 +16,14 @@ function AsteroidRing(x, y, innerRadius, outerRadius, num_asteroids) {
 		var angle = Math.random() * 2 * Math.PI;
 		var radius = Math.random() * (this.outerRadius - this.innerRadius);
 		this.asteroids.push(new Asteroid(Math.floor((radius + innerRadius) * Math.cos(angle) + this.x), 
-			Math.floor((radius + innerRadius) * Math.sin(angle) + this.y), 10 + Math.abs(Math.random() * 100)));
+			Math.floor((radius + innerRadius) * Math.sin(angle) + this.y), 10 + Math.abs(Math.random() * 100), this));
 	}
 }	
+
+AsteroidRing.prototype.remove = function(asteroid) {
+	var indexOf = this.asteroids.indexOf(asteroid);
+	this.asteroids.splice(indexOf, 1);
+}
 
 AsteroidRing.prototype.draw = function(ctx, canvas) {
 	for(var i = 0; i < this.asteroids.length; i++) {

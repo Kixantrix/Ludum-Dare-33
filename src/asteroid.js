@@ -3,16 +3,8 @@
 var Ball = require('./ball');
 var globals = require('./globals');
 
-function Asteroid(x, y, size) {
+function Asteroid(x, y, size, pool) {
 	Ball.apply(this, [x, y]);
-	this.x = x;
-	this.y = y;
-	this.angle = 0;
-
-	this.velX = 0;
-	this.velY = 0;
-
-	this.rotation = 0;
 
 	this.width = size;
 	this.height = size;
@@ -20,12 +12,31 @@ function Asteroid(x, y, size) {
 
 	this.mass = size;
 
+	this.pool = pool;
+
 	this.crashSound = new Audio("sounds/AsteroidCrash.wav");
-	this.crashSound.volume = 0.5;
+	this.explodeSound = new Audio("sounds/AsteroidExplosion.wav");
+
+	this.type = 'asteroid';
 }
 
 Asteroid.prototype = Object.create(Ball.prototype);
 Asteroid.prototype.constructor = Asteroid;
+
+Asteroid.prototype.explode = function() {
+	this.pool.remove(this);
+
+	var dx, dy;
+	dx = Math.abs(this.x - globals.camera.center().x);
+	dy = Math.abs(this.y - globals.camera.center().y);
+
+	if (dx + dy < 100) {
+		this.explodeSound.volume = 1;
+	} else {
+		this.explodeSound.volume = 100 / (dx + dy);
+	}
+	this.explodeSound.play();
+}
 
 Asteroid.prototype.onCollide = function(object) {
 	var dx, dy;

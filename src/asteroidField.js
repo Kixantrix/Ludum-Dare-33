@@ -12,9 +12,14 @@ function AsteroidField(x, y, size, num_asteroids) {
 	this.asteroids = [];
 
 	for(var i = 0; i < num_asteroids; i++) {
-		this.asteroids.push(new Asteroid(Math.abs(Math.random() * size) + this.x, Math.abs(Math.random() * size) + this.x, 10 + Math.abs(Math.random() * 100)));
+		this.asteroids.push(new Asteroid(Math.abs(Math.random() * size) + this.x, Math.abs(Math.random() * size) + this.x, 10 + Math.abs(Math.random() * 100), this));
 	}
 }	
+
+AsteroidField.prototype.remove = function(asteroid) {
+	var indexOf = this.asteroids.indexOf(asteroid);
+	this.asteroids.splice(indexOf, 1);
+}
 
 AsteroidField.prototype.draw = function(ctx, canvas) {
 	for(var i = 0; i < this.asteroids.length; i++) {
