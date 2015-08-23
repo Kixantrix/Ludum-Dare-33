@@ -1,16 +1,20 @@
 'use strict';
 
+var objectBoxes = require('./objectBoxes');
+
 function ProjectilePool() {
 	this.projectiles = [];
 }
 
 ProjectilePool.prototype.addProjectile = function(projectile) {
 	this.projectiles.push(projectile);
+	objectBoxes.addObject(projectile);
 }
 
 ProjectilePool.prototype.remove = function(projectile) {
 	var index = this.projectiles.indexOf(projectile);
 	this.projectiles.splice(index, 1);
+	objectBoxes.removeObject(projectile);
 }
 
 ProjectilePool.prototype.draw = function (ctx, camera) {

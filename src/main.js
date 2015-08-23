@@ -19,7 +19,7 @@ var boxSize = require('./variables').boxSize;
 var canvas;
 var ctx;
 
-var objectBoxes = {};
+var objectBoxes = require('./objectBoxes');
 
 var camera;
 var background;
@@ -28,7 +28,6 @@ var player;
 var enemy;
 var ball;
 var input;
-var asteroid;
 var asteroidField;
 var asteroidRing;
 var planets;
@@ -49,7 +48,6 @@ window.onload = function () {
     ball = new Ball(200, 200);
     input = new Input(canvas);
     enemy = new Ship(500, 500, camera, canvas, "images/spaceships/alienspaceship.png");
-    asteroid = new Asteroid(-300, -300, 32);
     background = new Background();
     asteroidField = new AsteroidField(1000, 1000, 2000, 150);
     asteroidRing = new AsteroidRing(-1000, -1000, 700, 900, 100);
@@ -59,7 +57,7 @@ window.onload = function () {
     planets.push(new Planet(1000, 3000, 300, "images/planets/p2shaded.png", false));
     planets.push(new Planet(2000, 1700, 600, "images/planets/p3shaded.png", true));
     planets.push(new Planet(1500, -1500, 950, "images/planets/p4shaded.png", false));
-    var box = [player, ball, enemy, asteroid].concat(asteroidField.asteroids).concat(asteroidRing.asteroids);
+    var box = [player, ball, enemy].concat(asteroidField.asteroids).concat(asteroidRing.asteroids);
     
     for(var i = 0; i < planets.length; i++) {
         box = box.concat(planets[i].getAsteroids());
@@ -70,13 +68,13 @@ window.onload = function () {
     globals.projectilePool = projectilePool;
     box.concat(projectilePool.projectiles);
     initializeObjectBoxes(box);
+
+    globals.objectBoxes = objectBoxes;
 };
 
 function initializeObjectBoxes(objects) {
     for (var i = 0; i < objects.length; i++) {
-        if (!objectBoxes[[objects[i].boxX, objects[i].boxY]])
-            objectBoxes[[objects[i].boxX, objects[i].boxY]] = [];
-        objectBoxes[[objects[i].boxX, objects[i].boxY]].push(objects[i]);
+        objectBoxes.addObject(objects[i]);
     }
 }
 
@@ -105,17 +103,16 @@ function update() {
     if (input.keys[27]) {//ESC
         paused = true;
     }
-    var objects = [player, ball, enemy, asteroid]
+    var objects = [player, ball, enemy]
     objects = objects.concat(asteroidField.asteroids);
     objects = objects.concat(asteroidRing.asteroids);
-    objects.concat(projectilePool.projectiles);
+    objects = objects.concat(projectilePool.projectiles);
     for(var i = 0; i < planets.length; i++) {
         objects = objects.concat(planets[i].getAsteroids());
     }
     
     player.update(input);
     enemy.update(objects);
-    asteroid.update();
     asteroidField.update();
     asteroidRing.update();
     doCollisions(objects);
@@ -202,16 +199,10 @@ function moveObjects(objects, t) {
         var newBoxY = Math.floor(objects[i].y / boxSize);
 
         if (newBoxX !== oldBoxX || newBoxY !== oldBoxY) {
-            var index = objectBoxes[[oldBoxX, oldBoxY]].indexOf(objects[i]);
-            objectBoxes[[oldBoxX, oldBoxY]].splice(index, 1);
-            if (objectBoxes[[oldBoxX, oldBoxY]].length === 0) {
-                delete objectBoxes[[oldBoxX, oldBoxY]];
-            }
-            if (!objectBoxes[[newBoxX, newBoxY]])
-                objectBoxes[[newBoxX, newBoxY]] = [];
-            objectBoxes[[newBoxX, newBoxY]].push(objects[i]);
+            objectBoxes.removeObject(objects[i]);
             objects[i].boxX = newBoxX;
             objects[i].boxY = newBoxY;
+            objectBoxes.addObject(objects[i]);
         }
     }
 }
@@ -263,7 +254,6 @@ function drawBackground() {
 	ctx.stroke();
     */
     background.draw(camera, ctx);
-    asteroid.draw(ctx, camera);
     asteroidField.draw(ctx, camera);
     asteroidRing.draw(ctx, camera);
 
