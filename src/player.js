@@ -51,11 +51,17 @@ Player.prototype.update = function(input) {
 			this.rotation *= 0.99;
 		}
 	}
-	
+
 	this.angle += this.rotation;
 
 	this.camera.x = -(this.x - this.canvas.width / 2 - this.width / 2);
 	this.camera.y = -(this.y - this.canvas.height / 2 - this.height / 2);
 };
+
+Player.prototype.draw = function(ctx, camera) {
+	Ship.prototype.draw.call(this, ctx, camera);
+
+	ctx.fillText(this.x + ", " + this.y, 10, 10);
+}
 
 module.exports = Player;
