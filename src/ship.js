@@ -14,7 +14,7 @@ function Ship(x, y, camera, canvas, src) {
 	this.velX = 0;
 	this.velY = 0;
 	// Max linear velocity of ship (x and y hypotenuse)
-	this.maxVel = 5;
+	this.maxVel = 20;
 
 	this.rotation = 0;
 	// Max rotation speed of ship
