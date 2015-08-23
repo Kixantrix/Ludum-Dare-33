@@ -1,5 +1,6 @@
 "use strict";
 
+// Object imports
 var Player = require('./player');
 var Ball = require('./ball');
 var Camera = require('./camera');
@@ -12,15 +13,19 @@ var AsteroidField = require('./asteroidField');
 var AsteroidRing = require('./asteroidRing');
 var Planet = require('./planet');
 
+// Globals import
 var globals = require('./globals');
 
+// Variables import
 var boxSize = require('./variables').boxSize;
 
+// Drawing tools
 var canvas;
 var ctx;
 
 var objectBoxes = require('./objectBoxes');
 
+// Variables for global objects
 var camera;
 var background;
 window.paused = false;
@@ -33,7 +38,7 @@ var asteroidRing;
 var planets;
 var projectilePool;
 
-// Dynamic resize of canvas
+// On load/constructor for game
 window.onload = function () {
 	canvas = document.getElementById('game-canvas');
 	canvas.width = window.innerWidth - 10;
@@ -41,6 +46,7 @@ window.onload = function () {
 	console.log(canvas);
 	ctx = canvas.getContext("2d");
 
+    // Initialize variables and environment
 	camera = new Camera(0, 0, 1, canvas);
     globals.camera = camera;
 
@@ -72,6 +78,7 @@ window.onload = function () {
     globals.objectBoxes = objectBoxes;
 };
 
+// Initializes collision boxes for objects in scenario
 function initializeObjectBoxes(objects) {
     for (var i = 0; i < objects.length; i++) {
         objectBoxes.addObject(objects[i]);
@@ -98,7 +105,7 @@ var step = 1000.0 / FPS
       draw();
   }, step);
 
-// Update information for 
+// Update information for each object and running collisions.
 function update() {
     if (input.keys[27]) {//ESC
         paused = true;
@@ -118,6 +125,7 @@ function update() {
     doCollisions(objects);
 }
 
+// Checks for collisions between objects. If they exist, completes momentum transfers.
 function doCollisions(objects) {
     var currentT = 0;
     var minT;
@@ -186,6 +194,7 @@ function doCollisions(objects) {
     }
 }
 
+// Moves objects, resorting boxes and adjucting things.
 function moveObjects(objects, t) {
     var oldBoxX, oldBoxY;
     for (var i = 0; i < objects.length; i++) {
@@ -207,6 +216,7 @@ function moveObjects(objects, t) {
     }
 }
 
+// Collision between two objects
 function doReaction(object1, object2) {
     var dx = object2.x - object1.x;
     var dy = object2.y - object1.y;
@@ -254,13 +264,13 @@ function drawBackground() {
 	ctx.stroke();
     */
     background.draw(camera, ctx);
-    asteroidField.draw(ctx, camera);
-    asteroidRing.draw(ctx, camera);
 
     for(var i = 0; i < planets.length; i++) {
         planets[i].draw(ctx, camera);
     }
-
+    
+    asteroidField.draw(ctx, camera);
+    asteroidRing.draw(ctx, camera);
 }
 
 // Draw characters
