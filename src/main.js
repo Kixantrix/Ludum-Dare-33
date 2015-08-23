@@ -177,9 +177,14 @@ function moveObjects(objects, t) {
         if (newBoxX !== oldBoxX || newBoxY !== oldBoxY) {
             var index = objectBoxes[[oldBoxX, oldBoxY]].indexOf(objects[i]);
             objectBoxes[[oldBoxX, oldBoxY]].splice(index, 1);
+            if (objectBoxes[[oldBoxX, oldBoxY]].length === 0) {
+                delete objectBoxes[[oldBoxX, oldBoxY]];
+            }
             if (!objectBoxes[[newBoxX, newBoxY]])
                 objectBoxes[[newBoxX, newBoxY]] = [];
             objectBoxes[[newBoxX, newBoxY]].push(objects[i]);
+            objects[i].boxX = newBoxX;
+            objects[i].boxY = newBoxY;
         }
     }
 }

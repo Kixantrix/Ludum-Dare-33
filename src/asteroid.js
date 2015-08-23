@@ -56,6 +56,9 @@ Asteroid.prototype.draw = function(ctx, camera) {
 	ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
 	ctx.fillStyle = 'brown';
 	ctx.fill();
+	ctx.fillStyle = 'white';
+	ctx.textAlign = 'center';
+	ctx.fillText(this.boxX + ", " + this.boxY, 0, 0);
 	ctx.restore();
 };
 
