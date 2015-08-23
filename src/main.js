@@ -49,6 +49,7 @@ window.onload = function () {
     // Initialize variables and environment
 	camera = new Camera(0, 0, 1, canvas);
     globals.camera = camera;
+    globals.canvas = canvas;
 
 	player = new Player(50, 50, camera, canvas);
     ball = new Ball(200, 200);

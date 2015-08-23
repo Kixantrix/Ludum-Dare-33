@@ -20,6 +20,7 @@ function Ball(x, y) {
 	this.radius = 32;
 
 	this.mass = 32;
+	this.maxhp = 32;
 	this.hp = 32;
 }
 

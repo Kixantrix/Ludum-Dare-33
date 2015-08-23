@@ -26,6 +26,9 @@ function Ship(x, y, camera, canvas, src) {
 
 	// Hit points
 	this.hp = 128;
+	this.maxhp = this.hp;
+	this.maxShields = 50;
+	this.shields = 50;
 
 	this.image = new Image();
 	this.image.src = src;

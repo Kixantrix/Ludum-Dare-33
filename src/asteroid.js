@@ -11,6 +11,7 @@ function Asteroid(x, y, size, pool) {
 	this.radius = size / 2;
 
 	this.mass = size;
+	this.maxhp = size;
 	this.hp = size;
 
 	this.pool = pool;
