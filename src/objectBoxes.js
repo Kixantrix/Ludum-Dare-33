@@ -13,6 +13,7 @@ ObjectBoxes.prototype.addObject = function(object) {
 ObjectBoxes.prototype.removeObject = function (object) {
 	var oldBoxX = object.boxX;
 	var oldBoxY = object.boxY;
+	if (!objectBoxes[[oldBoxX, oldBoxY]]) return;
 	var index = objectBoxes[[oldBoxX, oldBoxY]].indexOf(object);
     objectBoxes[[oldBoxX, oldBoxY]].splice(index, 1);
     if (objectBoxes[[oldBoxX, oldBoxY]].length === 0) {
