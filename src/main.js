@@ -54,16 +54,22 @@ window.onload = function () {
     asteroidField = new AsteroidField(1000, 1000, 2000, 150);
     asteroidRing = new AsteroidRing(-1000, -1000, 700, 900, 100);
     planets = [];
-    planets[1] = new Planet(-4000, 0, 500, "images/planets/greenplanet.png", false); 
-    planets[2] = new Planet(-2000, 500, 750, "images/planets/p1shaded.png", true);
-    planets[3] = new Planet(1000, 3000, 300, "images/planets/p2shaded.png", false);
-    planets[4] = new Planet(2000, 1700, 600, "images/planets/p3shaded.png", true);
-    planets[5] = new Planet(1500, -1500, 950, "images/planets/p4shaded.png", false);
+    planets.push(new Planet(-4000, 0, 500, "images/planets/greenplanet.png", false)); 
+    planets.push(new Planet(-2000, 500, 750, "images/planets/p1shaded.png", true));
+    planets.push(new Planet(1000, 3000, 300, "images/planets/p2shaded.png", false));
+    planets.push(new Planet(2000, 1700, 600, "images/planets/p3shaded.png", true));
+    planets.push(new Planet(1500, -1500, 950, "images/planets/p4shaded.png", false));
+    var box = [player, ball, enemy, asteroid].concat(asteroidField.asteroids).concat(asteroidRing.asteroids);
+    
+    for(var i = 0; i < planets.length; i++) {
+        box = box.concat(planets[i].getAsteroids());
+    }
 
     var ProjectilePool = require('./projectilePool');
     projectilePool = new ProjectilePool();
     globals.projectilePool = projectilePool;
-    initializeObjectBoxes([player, ball, enemy, asteroid].concat(asteroidField.asteroids).concat(asteroidRing.asteroids));
+    box.concat(projectilePool.projectiles);
+    initializeObjectBoxes(box);
 };
 
 function initializeObjectBoxes(objects) {
@@ -103,6 +109,10 @@ function update() {
     objects = objects.concat(asteroidField.asteroids);
     objects = objects.concat(asteroidRing.asteroids);
     objects.concat(projectilePool.projectiles);
+    for(var i = 0; i < planets.length; i++) {
+        objects = objects.concat(planets[i].getAsteroids());
+    }
+    
     player.update(input);
     enemy.update(objects);
     asteroid.update();
