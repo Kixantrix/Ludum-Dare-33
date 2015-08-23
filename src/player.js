@@ -74,8 +74,27 @@ Player.prototype.onCollide = function (object) {
 
 Player.prototype.draw = function(ctx, camera) {
 	Ship.prototype.draw.call(this, ctx, camera);
-
+	this.drawHealthBar(ctx);
 	ctx.fillText(this.x + ", " + this.y, 10, 10);
+
+}
+
+Player.prototype.drawHealthBar = function(ctx) {
+	var x = 100
+	var y = globals.canvas.height - 200;
+	var shieldWidth = 260 * this.shields / this.maxShields;
+	var healthWidth = 260 * this.hp / this.maxhp;
+	ctx.fillStyle = "#151B54";
+	ctx.fillRect(x, y, 300, 100);
+	ctx.fillStyle = "#368BC1";
+	ctx.fillRect(x + 20, y + 20, shieldWidth, 25);
+	ctx.fillStyle = "white";
+	ctx.font = "20px sansserif";
+	ctx.fillText(this.shields + " / " + this.maxShields, x + 30, y + 40);
+	ctx.fillStyle = "#52D017";
+	ctx.fillRect(x + 20, y + 55, healthWidth, 25);
+	ctx.fillStyle = "white";
+	ctx.fillText(this.hp + " / " + this.maxhp, x + 30, y + 75);
 }
 
 module.exports = Player;
