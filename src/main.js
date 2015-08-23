@@ -11,6 +11,8 @@ var Asteroid = require('./asteroid');
 var AsteroidField = require('./asteroidField');
 var AsteroidRing = require('./asteroidRing');
 
+var globals = require('./globals');
+
 var boxSize = require('./variables').boxSize;
 
 var canvas;
@@ -38,6 +40,7 @@ window.onload = function () {
 	ctx = canvas.getContext("2d");
 
 	camera = new Camera(0, 0, 1, canvas);
+    globals.camera = camera;
 
 	player = new Player(50, 50, camera, canvas);
     ball = new Ball(200, 200);

@@ -1,6 +1,7 @@
 "use strict";
 
 var Ball = require('./ball');
+var globals = require('./globals');
 
 function Asteroid(x, y, size) {
 	Ball.apply(this, [x, y]);
@@ -16,10 +17,26 @@ function Asteroid(x, y, size) {
 	this.width = size;
 	this.height = size;
 	this.radius = size / 2;
+
+	this.crashSound = new Audio("sounds/AsteroidCrash.wav");
+	this.crashSound.volume = 0.5;
 }
 
 Asteroid.prototype = Object.create(Ball.prototype);
 Asteroid.prototype.constructor = Asteroid;
+
+Asteroid.prototype.onCollide = function(object) {
+	var dx, dy;
+	dx = Math.abs(this.x - globals.camera.center().x);
+	dy = Math.abs(this.y - globals.camera.center().y);
+
+	if (dx + dy < 100) {
+		this.crashSound.volume = 1;
+	} else {
+		this.crashSound.volume = 100 / (dx + dy);
+	}
+	this.crashSound.play();
+}
 
 Asteroid.prototype.update = function() {
 	if(this.velX < 0.1 && this.velX > -0.1) {

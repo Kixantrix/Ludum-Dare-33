@@ -61,6 +61,13 @@ function Camera(x, y, z, canvas) {
     this.bottom = function() {
     	return -this.y + this.canvas.height / this.getZScale();
     }
+
+    this.center = function() {
+        return {
+            x: -this.x + this.canvas.width / this.getZScale() / 2,
+            y: -this.y + this.canvas.height / this.getZScale() / 2
+        }
+    }
 }
 
 module.exports = Camera;
