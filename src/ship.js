@@ -95,7 +95,7 @@ Ship.prototype.update = function(objects) {
 	// Head towards closest enemy is far away
 	if(closestEnemy.enemy) {
 		var enemy = closestEnemy.enemy;
-		if(closestEnemy[distance] < 10) { // Back away
+		if(closestEnemy.distance < 10) { // Back away
 			// RUN AWAY?
 
 		} else {
@@ -136,8 +136,12 @@ Ship.prototype.update = function(objects) {
 					this.thrustAccel(0.01);
 					console.log('right');
 				} else {
-					if (angleDiff < 0.3 && angleDiff > -0.3)
+					if (angleDiff < 0.3 && angleDiff > -0.3) {
 						this.thrust(0.5);
+						if (closestEnemy.distance < 500) {
+							this.weapon.fire(this);
+						}
+					}
 				}
 			}
 
