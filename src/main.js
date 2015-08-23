@@ -27,6 +27,7 @@ var objectBoxes = require('./objectBoxes');
 
 // Variables for global objects
 var camera;
+var miniMapCamera;
 var background;
 window.paused = false;
 var player;
@@ -49,6 +50,8 @@ window.onload = function () {
     // Initialize variables and environment
 	camera = new Camera(0, 0, 1, canvas);
     globals.camera = camera;
+    miniMapCamera = new Camera(0, 0, 10);
+    global.miniMapCamera = miniMapCamera;
     globals.canvas = canvas;
 
 	player = new Player(50, 50, camera, canvas);
@@ -250,24 +253,17 @@ function doReaction(object1, object2) {
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    drawBackground();
-    drawChars();
+    if(input.keys[77]) {
+        drawMiniMap()
+    } else {
+        drawBackground();
+        drawChars();
+    }
+    
 }
 
 // Draw background assets
 function drawBackground() {
-    /*
-	for (var x = Math.floor(camera.left() / 40) * 40; x < camera.right(); x += 40) {
-		ctx.moveTo.apply(ctx, camera.transform(x, camera.top()));
-		ctx.lineTo.apply(ctx, camera.transform(x, camera.bottom()));
-	}
-	for (var y = Math.floor(camera.top() / 40) * 40; y < camera.bottom(); y += 40) {
-		ctx.moveTo.apply(ctx, camera.transform(camera.left(), y));
-		ctx.lineTo.apply(ctx, camera.transform(camera.right(), y));
-	}
-	ctx.strokeStyle = "#eee";
-	ctx.stroke();
-    */
     background.draw(camera, ctx);
 
     for(var i = 0; i < planets.length; i++) {
@@ -280,8 +276,25 @@ function drawBackground() {
 
 // Draw characters
 function drawChars() {
-    player.draw(ctx, camera);
     ball.draw(ctx, camera);
     enemy.draw(ctx, camera);
     projectilePool.draw(ctx, camera);
+    player.draw(ctx, camera);
+}
+
+function drawMiniMap() {
+    miniMapCamera.x = camera.x / miniMapCamera.z + canvas.width / 2;
+    miniMapCamera.y = camera.y / miniMapCamera.z + canvas.height / 2;
+
+    for(var i = 0; i < planets.length; i++) {
+        planets[i].draw(ctx, miniMapCamera);
+    }
+    
+    asteroidField.draw(ctx, miniMapCamera);
+    asteroidRing.draw(ctx, miniMapCamera);
+
+    ball.draw(ctx, miniMapCamera);
+    enemy.draw(ctx, miniMapCamera);
+    projectilePool.draw(ctx, miniMapCamera);
+    player.draw(ctx, miniMapCamera);
 }
