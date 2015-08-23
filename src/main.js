@@ -9,6 +9,7 @@ var Input = require('./input');
 var Ship = require('./ship');
 var Asteroid = require('./asteroid');
 var AsteroidField = require('./asteroidField');
+var AsteroidRing = require('./asteroidRing');
 
 var boxSize = require('./variables').boxSize;
 
@@ -26,6 +27,7 @@ var ball;
 var input;
 var asteroid;
 var asteroidField;
+var asteroidRing;
 
 // Dynamic resize of canvas
 window.onload = function () {
@@ -41,11 +43,11 @@ window.onload = function () {
     ball = new Ball(200, 200);
     input = new Input(canvas);
     enemy = new Ship(500, 500, camera, canvas, "images/spaceships/alienspaceship.png");
-    asteroid = new Asteroid(-300, -300, 32)
+    asteroid = new Asteroid(-300, -300, 32);
     background = new Background();
     asteroidField = new AsteroidField(1000, 1000, 2000, 150);
-
-    initializeObjectBoxes([player, ball, enemy, asteroid].concat(asteroidField.asteroids));
+    asteroidRing = new AsteroidRing(-1000, -1000, 700, 900, 100);
+    initializeObjectBoxes([player, ball, enemy, asteroid].concat(asteroidField.asteroids).concat(asteroidRing.asteroids));
 };
 
 function initializeObjectBoxes(objects) {
@@ -83,10 +85,12 @@ function update() {
     }
     var objects = [player, ball, enemy, asteroid]
     objects = objects.concat(asteroidField.asteroids);
+    objects = objects.concat(asteroidRing.asteroids);
     player.update(input);
     enemy.update(objects);
     asteroid.update();
     asteroidField.update();
+    asteroidRing.update();
     doCollisions(objects);
 }
 
@@ -233,4 +237,5 @@ function drawChars() {
     enemy.draw(ctx, camera);
     asteroid.draw(ctx, camera);
     asteroidField.draw(ctx, camera);
+    asteroidRing.draw(ctx, camera);
 }

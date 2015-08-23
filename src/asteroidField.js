@@ -3,16 +3,16 @@
 var Asteroid = require('./asteroid');
 
 // Creates a field of astroids
-function AsteroidField(x, y, size, density) {
+function AsteroidField(x, y, size, num_asteroids) {
 	this.x = x;
 	this.y = y;
 	this.size = size;
-	this.density = density;
+	this.num_asteroids = num_asteroids;
 
 	this.asteroids = [];
 
-	for(var i = 0; i < density; i++) {
-		this.asteroids.push(new Asteroid(Math.abs(Math.random() * size) + this.x, Math.abs(Math.random() * size) + this.x, 25));
+	for(var i = 0; i < num_asteroids; i++) {
+		this.asteroids.push(new Asteroid(Math.abs(Math.random() * size) + this.x, Math.abs(Math.random() * size) + this.x, Math.abs(Math.random() * 100)));
 	}
 }	
 
