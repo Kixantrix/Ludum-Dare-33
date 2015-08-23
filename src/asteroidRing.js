@@ -16,7 +16,7 @@ function AsteroidRing(x, y, innerRadius, outerRadius, num_asteroids) {
 		var angle = Math.random() * 2 * Math.PI;
 		var radius = Math.random() * (this.outerRadius - this.innerRadius);
 		this.asteroids.push(new Asteroid(Math.floor((radius + innerRadius) * Math.cos(angle) + this.x), 
-			Math.floor((radius + innerRadius) * Math.sin(angle) + this.y), Math.abs(Math.random() * 100)));
+			Math.floor((radius + innerRadius) * Math.sin(angle) + this.y), 10 + Math.abs(Math.random() * 100)));
 	}
 }	
 

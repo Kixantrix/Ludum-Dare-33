@@ -12,7 +12,7 @@ function AsteroidField(x, y, size, num_asteroids) {
 	this.asteroids = [];
 
 	for(var i = 0; i < num_asteroids; i++) {
-		this.asteroids.push(new Asteroid(Math.abs(Math.random() * size) + this.x, Math.abs(Math.random() * size) + this.x, Math.abs(Math.random() * 100)));
+		this.asteroids.push(new Asteroid(Math.abs(Math.random() * size) + this.x, Math.abs(Math.random() * size) + this.x, 10 + Math.abs(Math.random() * 100)));
 	}
 }	
 

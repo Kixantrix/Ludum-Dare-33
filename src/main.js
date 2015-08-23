@@ -205,10 +205,12 @@ function doReaction(object1, object2) {
     var length = (dvx * dx + dvy * dy);
     length /= (dx * dx + dy * dy);
 
-    object1.velX += (length) * dx;
-    object1.velY += (length) * dy;
-    object2.velX = vx1 + dvx - (length) * dx;
-    object2.velY = vy1 + dvy - (length) * dy;
+    var totalMass = (object1.mass + object2.mass);
+
+    object1.velX += (length) * dx * totalMass / object1.mass / 2;
+    object1.velY += (length) * dy * totalMass / object1.mass / 2;
+    object2.velX = vx1 + dvx - (length) * dx * totalMass / object2.mass / 2;
+    object2.velY = vy1 + dvy - (length) * dy * totalMass / object2.mass / 2;
 
     if (object1.onCollide) object1.onCollide(object2);
     if (object2.onCollide) object2.onCollide(object1);

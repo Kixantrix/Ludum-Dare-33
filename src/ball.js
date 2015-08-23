@@ -18,6 +18,8 @@ function Ball(x, y) {
 	this.width = 64;
 	this.height = 64;
 	this.radius = 32;
+
+	this.mass = 32;
 }
 
 Ball.prototype.draw = function(ctx, camera) {

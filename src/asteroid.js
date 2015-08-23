@@ -18,6 +18,8 @@ function Asteroid(x, y, size) {
 	this.height = size;
 	this.radius = size / 2;
 
+	this.mass = size;
+
 	this.crashSound = new Audio("sounds/AsteroidCrash.wav");
 	this.crashSound.volume = 0.5;
 }
