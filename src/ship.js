@@ -108,9 +108,6 @@ Ship.prototype.update = function(objects) {
 		}
 	} 
 	
-
-	this.x += this.velX;
-	this.y += this.velY;
 	this.angle += this.rotation;
 };
 
