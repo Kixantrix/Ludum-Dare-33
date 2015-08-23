@@ -206,6 +206,9 @@ function doReaction(object1, object2) {
     object1.velY += (length) * dy;
     object2.velX = vx1 + dvx - (length) * dx;
     object2.velY = vy1 + dvy - (length) * dy;
+
+    if (object1.onCollide) object1.onCollide(object2);
+    if (object2.onCollide) object2.onCollide(object1);
 }
 
 // Drawing function

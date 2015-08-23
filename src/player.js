@@ -6,6 +6,8 @@ var Ship = require('./ship');
 function Player(x, y, camera, canvas) {
 	Ship.apply(this, [x, y, camera, canvas, "images/spaceships/player_ship.png"]);
 	this.name = "Player";
+	this.crashSound = new Audio("sounds/Explosion20.wav");
+	this.crashSound.volume = 0.5;
 	this.maxVel = 15;
 }
 
@@ -58,6 +60,10 @@ Player.prototype.update = function(input) {
 	this.camera.x = -(this.x - this.canvas.width / 2 - this.width / 2);
 	this.camera.y = -(this.y - this.canvas.height / 2 - this.height / 2);
 };
+
+Player.prototype.onCollide = function (object) {
+	this.crashSound.play();
+}
 
 Player.prototype.draw = function(ctx, camera) {
 	Ship.prototype.draw.call(this, ctx, camera);
