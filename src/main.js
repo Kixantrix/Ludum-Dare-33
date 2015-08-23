@@ -256,14 +256,15 @@ function drawBackground() {
 	ctx.stroke();
     */
     background.draw(camera, ctx);
-    asteroid.draw(ctx, camera);
-    asteroidField.draw(ctx, camera);
-    asteroidRing.draw(ctx, camera);
+
 
     for(var i = 0; i < planets.length; i++) {
         planets[i].draw(ctx, camera);
     }
 
+    asteroid.draw(ctx, camera);
+    asteroidField.draw(ctx, camera);
+    asteroidRing.draw(ctx, camera);
 }
 
 // Draw characters
