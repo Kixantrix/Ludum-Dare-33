@@ -106,7 +106,7 @@ Ship.prototype.update = function(objects) {
 			var angle = Math.PI / 2 + Math.atan2(dy, dx);
 			var angleDiff = mod((this.angle - angle + Math.PI), (Math.PI * 2)) - Math.PI;
 
-			console.log('angleDiff', angleDiff);
+			//console.log('angleDiff', angleDiff);
 
 			var decelerateRotation;
 			if (this.rotation !== 0) {
@@ -122,7 +122,7 @@ Ship.prototype.update = function(objects) {
 			} else {
 				var finalAngle = angleDiff - this.rotation * this.rotation / decelerateRotation / 2;
 				finalAngle = mod((finalAngle + Math.PI), (Math.PI * 2)) - Math.PI;
-				console.log('finalAngle', finalAngle);
+				//console.log('finalAngle', finalAngle);
 				if (finalAngle > Math.PI / 2 || finalAngle < -Math.PI / 2) {
 					if (Math.abs(this.rotation) > 0.05) {
 						this.thrustAccel(decelerateRotation);
@@ -131,10 +131,8 @@ Ship.prototype.update = function(objects) {
 					}
 				} else if (finalAngle > 0.01) {
 					this.thrustAccel(-0.01);
-					console.log('left');
 				} else if (finalAngle < -0.01) {
 					this.thrustAccel(0.01);
-					console.log('right');
 				} else {
 					if (angleDiff < 0.3 && angleDiff > -0.3) {
 						this.thrust(0.5);
