@@ -76,6 +76,7 @@ window.onload = function () {
     initializeObjectBoxes(box);
 
     globals.objectBoxes = objectBoxes;
+    globals.frameCount = 0;
 };
 
 // Initializes collision boxes for objects in scenario
@@ -110,6 +111,9 @@ function update() {
     if (input.keys[27]) {//ESC
         paused = true;
     }
+
+    globals.frameCount++;
+
     var objects = [player, ball, enemy]
     objects = objects.concat(asteroidField.asteroids);
     objects = objects.concat(asteroidRing.asteroids);

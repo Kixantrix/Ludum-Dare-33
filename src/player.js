@@ -37,8 +37,7 @@ Player.prototype.update = function(input) {
 	}
 
 	if (input.keys[32]) {// space
-		new Projectile(this.x, this.y,
-			Math.sin(this.angle) * 10 + this.velX, -Math.cos(this.angle) * 10 + this.velY, globals.projectilePool);
+		this.fire();
 	}	
 
 	if(!thrustApplied) {

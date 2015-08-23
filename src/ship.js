@@ -2,6 +2,7 @@
 
 var Ball = require('./ball');
 var xPlusYDistance = require('./point')['xPlusYDistance'];
+var Weapon = require('./weapon');
 
 function Ship(x, y, camera, canvas, src) {
 	Ball.apply(this, [x, y]);
@@ -23,13 +24,18 @@ function Ship(x, y, camera, canvas, src) {
 	this.height = 128;
 	this.radius = 128 / 2;
 
+	// Hit points
+	this.hp = 128;
+
 	this.image = new Image();
 	this.image.src = src;
 	
 
-	this.enemies = {}
+	this.enemies = {};
 	this.enemies['Player'] = true;
-	this.name = "Enemy"
+	this.name = "Enemy";
+
+	this.weapon = new Weapon(50, 30, 20);
 }
 
 Ship.prototype = Object.create(Ball.prototype);
@@ -46,6 +52,13 @@ Ship.prototype.thrust = function(accel) {
 	}
 	// Thrust has been applied
 	return true;
+}
+
+// Fire method
+Ship.prototype.fire = function() {
+	if(this.weapon) {
+		this.weapon.fire(this);
+	}
 }
 
 Ship.prototype.thrustAccel = function(accel) {
