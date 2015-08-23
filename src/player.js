@@ -50,11 +50,8 @@ Player.prototype.update = function(input) {
 		} else {
 			this.rotation *= 0.99;
 		}
-	} 
+	}
 	
-
-	this.x += this.velX;
-	this.y += this.velY;
 	this.angle += this.rotation;
 
 	this.camera.x = -(this.x - this.canvas.width / 2 - this.width / 2);
