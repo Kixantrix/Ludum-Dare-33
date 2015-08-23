@@ -19,9 +19,9 @@ function Ship(x, y, camera, canvas, src) {
 	this.rotation = 0;
 	// Max rotation speed of ship
 	this.maxRotationSpeed = 0.2;
-	this.width = 64;
-	this.height = 64;
-	this.radius = 32;
+	this.width = 128;
+	this.height = 128;
+	this.radius = 128 / 2;
 
 	this.image = new Image();
 	this.image.src = src;

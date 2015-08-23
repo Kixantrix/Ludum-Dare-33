@@ -7,6 +7,7 @@ var Point = require('./point')['Point'];
 var Background = require('./background');
 var Input = require('./input');
 var Ship = require('./ship');
+var Asteroid = require('./asteroid');
 
 var canvas;
 var ctx;
@@ -17,6 +18,7 @@ var player;
 var enemy;
 var ball;
 var input;
+var asteroid;
 
 // Dynamic resize of canvas
 window.onload = function () {
@@ -32,6 +34,7 @@ window.onload = function () {
     ball = new Ball(200, 200);
     input = new Input(canvas);
     enemy = new Ship(500, 500, camera, canvas, "images/spaceships/alienspaceship.png");
+    asteroid = new Asteroid(-300, -300, 32)
     background = new Background();
 };
 
@@ -60,9 +63,10 @@ function update() {
     if (input.keys[27]) {//ESC
         paused = true;
     }
-    var objects = [player, ball, enemy]
+    var objects = [player, ball, enemy, asteroid]
     player.update(input);
     enemy.update(objects);
+    asteroid.update();
     doCollisions(objects);
 }
 
@@ -182,4 +186,5 @@ function drawChars() {
     player.draw(ctx, camera);
     ball.draw(ctx, camera);
     enemy.draw(ctx, camera);
+    asteroid.draw(ctx, camera);
 }
