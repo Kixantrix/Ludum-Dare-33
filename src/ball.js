@@ -1,8 +1,14 @@
 'use strict';
 
+var boxSize = require('./variables').boxSize;
+
 function Ball(x, y) {
 	this.x = x;
 	this.y = y;
+
+	this.boxX = Math.floor(x / boxSize);
+	this.boxY = Math.floor(y / boxSize);
+
 	this.angle = 0;
 
 	this.velX = 0;

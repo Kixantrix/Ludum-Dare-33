@@ -10,8 +10,13 @@ var Ship = require('./ship');
 var Asteroid = require('./asteroid');
 var AsteroidField = require('./asteroidField');
 
+var boxSize = require('./variables').boxSize;
+
 var canvas;
 var ctx;
+
+var objectBoxes = {};
+
 var camera;
 var background;
 window.paused = false;
@@ -39,7 +44,17 @@ window.onload = function () {
     asteroid = new Asteroid(-300, -300, 32)
     background = new Background();
     asteroidField = new AsteroidField(1000, 1000, 2000, 150);
+
+    initializeObjectBoxes([player, ball, enemy, asteroid].concat(asteroidField.asteroids));
 };
+
+function initializeObjectBoxes(objects) {
+    for (var i = 0; i < objects.length; i++) {
+        if (!objectBoxes[[objects[i].boxX, objects[i].boxY]])
+            objectBoxes[[objects[i].boxX, objects[i].boxY]] = [];
+        objectBoxes[[objects[i].boxX, objects[i].boxY]].push(objects[i]);
+    }
+}
 
 // Dynamic resize of canvas
 window.onresize = function() {
@@ -84,43 +99,53 @@ function doCollisions(objects) {
         minObject1 = undefined;
         minObject2 = undefined;
         for (var i = 0; i < objects.length; i++) {
-            for (var j = i + 1; j < objects.length; j++) {
-                var dx = objects[j].x - objects[i].x;
-                var dy = objects[j].y - objects[i].y;
+            for (var boxX = -1; boxX < 2; boxX++) {
+                for (var boxY = -1; boxY < 2; boxY++) {
+                    var boxXnew = boxX + objects[i].boxX;
+                    var boxYnew = boxY + objects[i].boxY;
+                    if (!objectBoxes[[boxXnew, boxYnew]] ||
+                        !objectBoxes[[boxXnew, boxYnew]].length) continue;
+                    for (var j = 0; j < objectBoxes[[boxXnew, boxYnew]].length; j++) {
+                        var object2 = objectBoxes[[boxXnew, boxYnew]][j];
+                        var dx = object2.x - objects[i].x;
+                        var dy = object2.y - objects[i].y;
 
-                var dvx = objects[j].velX - objects[i].velX;
-                var dvy = objects[j].velY - objects[j].velY;
+                        var dvx = object2.velX - objects[i].velX;
+                        var dvy = object2.velY - objects[i].velY;
 
-                var ri = objects[i].radius;
-                var rj = objects[j].radius;
-                var r = ri + rj;
+                        var ri = objects[i].radius;
+                        var rj = object2.radius;
+                        var r = ri + rj;
 
-                var b = 2 * (dvx * dx + dvy * dy);
-                if (b > 0) {
-                    continue;
-                }
+                        var b = 2 * (dvx * dx + dvy * dy);
+                        if (b > 0) {
+                            continue;
+                        }
 
-                var a = (dvx * dvx + dvy * dvy);
-                var c = (dx * dx + dy * dy - r * r);
+                        var a = (dvx * dvx + dvy * dvy);
+                        var c = (dx * dx + dy * dy - r * r);
 
-                var discriminant = b * b - 4 * a * c;
-                if (discriminant < 0) {
-                    continue;
-                }
+                        var discriminant = b * b - 4 * a * c;
+                        if (discriminant < 0) {
+                            continue;
+                        }
 
-                var t = (-b - Math.sqrt(discriminant)) / 2 / a;
-                if (t > 1 || t <= 0) continue;
-                //if (t < 1 && t > 0)
-                //    console.log("THERE WILL BE A COLLISION");
-                if (t < minT) {
-                    minT = t;
-                    minObject1 = objects[i];
-                    minObject2 = objects[j];
+                        var t = (-b - Math.sqrt(discriminant)) / 2 / a;
+                        //console.log(t, minT);
+                        if (t > 1 || t <= 0) continue;
+                        //if (t < 1 && t > 0)
+                        //    console.log("THERE WILL BE A COLLISION");
+                        if (t < minT) {
+                            minT = t;
+                            minObject1 = objects[i];
+                            minObject2 = object2;
+                        }
+                    }
                 }
             }
         }
 
-        console.log(minT, minObject1);
+        //console.log(minT, minObject1);
 
         if (minObject1) {
             moveObjects(objects, minT);
@@ -128,15 +153,30 @@ function doCollisions(objects) {
             doReaction(minObject1, minObject2);
         } else {
             moveObjects(objects, 1 - currentT);
-            currentT += minT;
+            currentT = 1;
         }
     }
 }
 
 function moveObjects(objects, t) {
+    var oldBoxX, oldBoxY;
     for (var i = 0; i < objects.length; i++) {
+        oldBoxX = objects[i].boxX;
+        oldBoxY = objects[i].boxY;
+
         objects[i].x += objects[i].velX * t;
         objects[i].y += objects[i].velY * t;
+
+        var newBoxX = Math.floor(objects[i].x / boxSize);
+        var newBoxY = Math.floor(objects[i].y / boxSize);
+
+        if (newBoxX !== oldBoxX || newBoxY !== oldBoxY) {
+            var index = objectBoxes[[oldBoxX, oldBoxY]].indexOf(objects[i]);
+            objectBoxes[[oldBoxX, oldBoxY]].splice(index, 1);
+            if (!objectBoxes[[newBoxX, newBoxY]])
+                objectBoxes[[newBoxX, newBoxY]] = [];
+            objectBoxes[[newBoxX, newBoxY]].push(objects[i]);
+        }
     }
 }
 
@@ -162,7 +202,7 @@ function doReaction(object1, object2) {
 // Drawing function
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath()
+    
     drawBackground();
     drawChars();
 }

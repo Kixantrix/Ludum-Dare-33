@@ -6,6 +6,7 @@ var Ship = require('./ship');
 function Player(x, y, camera, canvas) {
 	Ship.apply(this, [x, y, camera, canvas, "images/spaceships/player_ship.png"]);
 	this.name = "Player";
+	this.maxVel = 15;
 }
 
 Player.prototype = Object.create(Ship.prototype);
