@@ -35,8 +35,6 @@ var background;
 window.paused = false;
 var player;
 var enemy;
-var civilianShip;
-var ball;
 var input;
 var asteroidField;
 var asteroidRing;
@@ -61,10 +59,8 @@ window.onload = function () {
     globals.canvas = canvas;
 
 	player = new Player(50, 50, camera, canvas);
-    ball = new Ball(200, 200);
     input = new Input(canvas);
     enemy = new Ship(500, 500, camera, canvas, "images/spaceships/alienspaceship.png");
-    civilianShip = new CivilianShip(700, 500, camera, canvas, 'Red', 0);
 
     background = new Background();
     asteroidField = new AsteroidField(-10000, -15000, 2000, 150);
@@ -83,7 +79,7 @@ window.onload = function () {
     planets.push(new Planet(2000, 1700, 600, "images/planets/p3shaded.png", true));
     planets.push(new Planet(1500, -1500, 950, "images/planets/p4shaded.png", false));
     */
-    var box = [player, ball, enemy, civilianShip].concat(asteroidField.asteroids).concat(asteroidRing.asteroids);
+    var box = [player, enemy].concat(asteroidField.asteroids).concat(asteroidRing.asteroids);
     
     for(var i = 0; i < planets.length; i++) {
         box = box.concat(planets[i].getAsteroids());
@@ -138,7 +134,7 @@ function update() {
 
     globals.frameCount++;
 
-    var objects = [player, ball, enemy, civilianShip]
+    var objects = [player, enemy]
     objects = objects.concat(asteroidField.asteroids);
     objects = objects.concat(asteroidRing.asteroids);
     objects = objects.concat(projectilePool.projectiles);
@@ -154,7 +150,6 @@ function update() {
         factions[i].update(objects);
     }
     enemy.update(objects);
-    civilianShip.update(input);
     asteroidField.update();
     asteroidRing.update();
     doCollisions(objects);
@@ -303,9 +298,7 @@ function drawBackground() {
 
 // Draw characters
 function drawChars() {
-    ball.draw(ctx, camera);
     enemy.draw(ctx, camera);
-    civilianShip.draw(ctx, camera);
     projectilePool.draw(ctx, camera);
     for(var i = 0; i < factions.length; i++) {
         factions[i].drawShips(ctx, camera);
@@ -324,9 +317,7 @@ function drawMiniMap() {
     asteroidField.draw(ctx, miniMapCamera);
     asteroidRing.draw(ctx, miniMapCamera);
 
-    ball.draw(ctx, miniMapCamera);
     enemy.draw(ctx, miniMapCamera);
-    civilianShip.draw(ctx, miniMapCamera);
     for(var i = 0; i < factions.length; i++) {
         factions[i].drawShips(ctx, miniMapCamera);
     }
