@@ -71,6 +71,23 @@ Ship.prototype.fire = function() {
 	}
 }
 
+Ship.prototype.onHit = function (damage, source) {
+	this.enemies[source] = true;
+	if(damage > this.shields) {
+		damage -= this.shields;
+		this.shields = 0;
+		this.hp -= damage;
+		if(this.hp <= 0) {
+			this.remove();
+		}
+	} else {
+		this.shields -= damage;
+	}
+}
+
+Ship.prototype.remove = function() {
+}
+
 Ship.prototype.thrustAccel = function(accel) {
 
 	if(Math.abs(this.rotation + accel) < this.maxRotationSpeed) {

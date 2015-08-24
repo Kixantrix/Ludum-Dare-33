@@ -10,7 +10,7 @@ function Projectile(x, y, velX, velY, pool, origin, damage) {
 	this.width = 16;
 	this.height = 16;
 	this.origin = origin;
-	this.weight = 2;
+	this.mass = 2;
 	this.damage = damage;
 
 	this.pool = pool;
@@ -23,10 +23,8 @@ Projectile.prototype = Object.create(Ball.prototype);
 Projectile.prototype.constructor = Projectile;
 
 Projectile.prototype.onCollide = function(object) {
-	if (object.type === 'asteroid') {
-		object.explode();
-		this.remove();
-	}
+	object.onHit(this.damage, this.origin.name);
+	this.remove()
 }
 
 Projectile.prototype.remove = function() {

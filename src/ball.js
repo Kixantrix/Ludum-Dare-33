@@ -38,4 +38,8 @@ Ball.prototype.draw = function(ctx, camera) {
 	ctx.restore();
 };
 
+Ball.prototype.onHit = function(damage, source) {
+	
+}
+
 module.exports = Ball;

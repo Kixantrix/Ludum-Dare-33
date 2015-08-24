@@ -40,6 +40,13 @@ Asteroid.prototype.explode = function() {
 	this.explodeSound.play();
 }
 
+Asteroid.prototype.onHit = function (damage, source) {
+	this.hp -= damage;
+	if(this.hp <= 0) {
+		this.pool.remove();
+	}
+}
+
 Asteroid.prototype.onCollide = function(object) {
 	var dx, dy;
 	dx = Math.abs(this.x - globals.camera.center().x);
