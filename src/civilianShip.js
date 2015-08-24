@@ -28,4 +28,7 @@ function CivilianShip(x, y, camera, canvas, faction, num) {
 
 }
 
+CivilianShip.prototype = Object.create(Ship.prototype);
+CivilianShip.prototype.constructor = CivilianShip;
+
 module.exports = CivilianShip;

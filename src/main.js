@@ -302,7 +302,7 @@ function drawChars() {
     enemy.draw(ctx, camera);
     projectilePool.draw(ctx, camera);
     for(var i = 0; i < factions.length; i++) {
-        faction[i].drawShips(ctx, camera);
+        factions[i].drawShips(ctx, camera);
     }
     player.draw(ctx, camera);
 }
@@ -321,7 +321,7 @@ function drawMiniMap() {
     ball.draw(ctx, miniMapCamera);
     enemy.draw(ctx, miniMapCamera);
     for(var i = 0; i < factions.length; i++) {
-        faction[i].drawShips(ctx, miniMapCamera);
+        factions[i].drawShips(ctx, miniMapCamera);
     }
     projectilePool.draw(ctx, miniMapCamera);
     player.draw(ctx, miniMapCamera);

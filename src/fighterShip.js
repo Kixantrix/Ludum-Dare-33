@@ -26,4 +26,7 @@ function FighterShip(x, y, camera, canvas, faction, num) {
 
 }
 
+FighterShip.prototype = Object.create(Ship.prototype);
+FighterShip.prototype.constructor = FighterShip;
+
 module.exports = FighterShip;

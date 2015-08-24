@@ -26,4 +26,7 @@ function GunShip(x, y, camera, canvas, faction, num) {
 
 }
 
+GunShip.prototype = Object.create(Ship.prototype);
+GunShip.prototype.constructor = GunShip;
+
 module.exports = GunShip;

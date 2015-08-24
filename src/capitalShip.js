@@ -26,4 +26,7 @@ function CapitalShip(x, y, camera, canvas, faction, num) {
 
 }
 
+CapitalShip.prototype = Object.create(Ship.prototype);
+CapitalShip.prototype.constructor = CapitalShip;
+
 module.exports = CapitalShip;

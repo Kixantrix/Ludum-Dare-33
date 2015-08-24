@@ -28,4 +28,7 @@ function Freighter(x, y, camera, canvas, faction, num) {
 
 }
 
+Freighter.prototype = Object.create(Ship.prototype);
+Freighter.prototype.constructor = Freighter;
+
 module.exports = Freighter;
