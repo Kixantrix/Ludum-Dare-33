@@ -49,17 +49,17 @@ function Camera(x, y, z, canvas) {
     }
 
     this.left = function() {
-    	return -this.x;
+    	return -this.x / this.getZScale();
     }
     this.right = function() {
-    	return -this.x + this.canvas.width * this.getZScale();
+    	return -this.x / this.getZScale() + this.canvas.width / this.getZScale();
     }
     this.top = function() {
-    	return -this.y;
+    	return -this.y / this.getZScale();
     }
 
     this.bottom = function() {
-    	return -this.y + this.canvas.height * this.getZScale();
+    	return -this.y / this.getZScale() + this.canvas.height / this.getZScale();
     }
 
     this.center = function() {

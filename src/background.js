@@ -20,8 +20,8 @@ function Background() {
     this.findFields = function(camera) {
         var canvas = document.getElementById('game-canvas');
         var edges = [];
-        for(var i = Math.floor((-1 * camera.x - canvas.width / 2) / 2000 - 2); i < Math.floor((-1 * camera.x + canvas.width / 2) / 2000 + 2); i++) {
-            for(var j = Math.floor((-1 * camera.y - canvas.height / 2) / 2000 - 2); j < Math.floor((-1 * camera.y + canvas.height / 2) / 2000 + 2); j++) {
+        for(var i = Math.floor((camera.left()) / 2000 - 2); i < Math.floor((camera.right()) / 2000 + 2); i++) {
+            for(var j = Math.floor((camera.top()) / 2000 - 2); j < Math.floor((camera.bottom()) / 2000 + 2); j++) {
                 edges.push(this.getStarField(i * 2000,
                     j * 2000));
             }
