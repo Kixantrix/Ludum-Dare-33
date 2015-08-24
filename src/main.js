@@ -12,6 +12,8 @@ var Asteroid = require('./asteroid');
 var AsteroidField = require('./asteroidField');
 var AsteroidRing = require('./asteroidRing');
 var Planet = require('./planet');
+var Faction = require('./faction');
+var factionInfo = require('./factionInfo');
 
 // Globals import
 var globals = require('./globals');
@@ -40,6 +42,7 @@ var asteroidField;
 var asteroidRing;
 var planets;
 var projectilePool;
+var factions;
 
 // On load/constructor for game
 window.onload = function () {
@@ -66,16 +69,28 @@ window.onload = function () {
     background = new Background();
     asteroidField = new AsteroidField(1000, 1000, 2000, 150);
     asteroidRing = new AsteroidRing(-1000, -1000, 700, 900, 100);
-    planets = [];
+    factions = [];
+    planets = [];    
+    for(name in factionInfo) {
+        var faction = new Faction(name);
+        factions.push(faction);
+        planets.push(faction.basePlanet);
+    }
+    /*
     planets.push(new Planet(-4000, 0, 500, "images/planets/greenplanet.png", false)); 
     planets.push(new Planet(-2000, 500, 750, "images/planets/p1shaded.png", true));
     planets.push(new Planet(1000, 3000, 300, "images/planets/p2shaded.png", false));
     planets.push(new Planet(2000, 1700, 600, "images/planets/p3shaded.png", true));
     planets.push(new Planet(1500, -1500, 950, "images/planets/p4shaded.png", false));
+    */
     var box = [player, ball, enemy, civilianShip].concat(asteroidField.asteroids).concat(asteroidRing.asteroids);
     
     for(var i = 0; i < planets.length; i++) {
         box = box.concat(planets[i].getAsteroids());
+    }
+
+    for(var i = 0; i < factions.length; i++) {
+        box = box.concat(factions[i].ships);
     }
 
     var ProjectilePool = require('./projectilePool');
@@ -130,8 +145,14 @@ function update() {
     for(var i = 0; i < planets.length; i++) {
         objects = objects.concat(planets[i].getAsteroids());
     }
-    
+    for(var i = 0; i < factions.length; i++) {
+        objects = objects.concat(factions[i].ships);
+    }
+
     player.update(input);
+    for(var i = 0; i < factions.length; i++) {
+        factions[i].update(objects);
+    }
     enemy.update(objects);
     civilianShip.update(input);
     asteroidField.update();
@@ -286,6 +307,9 @@ function drawChars() {
     enemy.draw(ctx, camera);
     civilianShip.draw(ctx, camera);
     projectilePool.draw(ctx, camera);
+    for(var i = 0; i < factions.length; i++) {
+        faction[i].drawShips(ctx, camera);
+    }
     player.draw(ctx, camera);
 }
 
@@ -303,6 +327,9 @@ function drawMiniMap() {
     ball.draw(ctx, miniMapCamera);
     enemy.draw(ctx, miniMapCamera);
     civilianShip.draw(ctx, miniMapCamera);
+    for(var i = 0; i < factions.length; i++) {
+        faction[i].drawShips(ctx, miniMapCamera);
+    }
     projectilePool.draw(ctx, miniMapCamera);
     player.draw(ctx, miniMapCamera);
 }

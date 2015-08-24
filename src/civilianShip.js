@@ -2,9 +2,10 @@
 
 var Ship = require('./ship');
 var globals = require('./globals');
+var Weapon = require('./weapon');
 
 function CivilianShip(x, y, camera, canvas, faction, num) {
-	Ship.apply(this, [x, y, camera, canvas, "images/Spaceships/alien1.png"])
+	Ship.apply(this, [x, y, camera, canvas, "images/Spaceships/alien1.png"]);
 	this.faction = faction;
 
 	this.maxRotationSpeed = 0.1;

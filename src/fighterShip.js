@@ -1,10 +1,11 @@
-"use strict":
+"use strict";
 
 var Ship = require('./ship');
 var globals = require('./globals');
+var Weapon = require('./weapon');
 
-function fighterShip(x, y, camera, canvas, faction, num) {
-	Ship.apply(this, [x, y, camera, canvas, ""])
+function FighterShip(x, y, camera, canvas, faction, num) {
+	Ship.apply(this, [x, y, camera, canvas, ""]);
 	this.faction = faction;
 
 	this.maxRotationSpeed = 0.4;
