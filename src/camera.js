@@ -23,14 +23,14 @@ function Camera(x, y, z, canvas) {
     }  
 
     this.applyTransform = function(ctx) {
-        ctx.translate(this.x, this.y);
         var scale = this.getZScale();
+        ctx.translate(this.x, this.y);
         ctx.scale(scale, scale);
     }
 
     // Returns a scaling factor for size of items on 2d plane based on z index.
     this.getZScale = function() {
-    	return 1.0 * DEFAULT_DEPTH / z;
+    	return 1.0 * DEFAULT_DEPTH / this.z;
     }
 
     // Changes X position
@@ -52,17 +52,23 @@ function Camera(x, y, z, canvas) {
     	return -this.x;
     }
     this.right = function() {
-    	return -this.x + this.canvas.width / this.getZScale();
+    	return -this.x + this.canvas.width * this.getZScale();
     }
     this.top = function() {
     	return -this.y;
     }
 
     this.bottom = function() {
-    	return -this.y + this.canvas.height / this.getZScale();
+    	return -this.y + this.canvas.height * this.getZScale();
     }
 
     this.center = function() {
+        if (arguments.length === 2) {
+            this.x = -arguments[0] * this.getZScale() + this.canvas.width / 2;
+            this.y = -arguments[1] * this.getZScale() + this.canvas.height / 2;
+            return;
+        }
+
         return {
             x: -this.x + this.canvas.width / this.getZScale() / 2,
             y: -this.y + this.canvas.height / this.getZScale() / 2

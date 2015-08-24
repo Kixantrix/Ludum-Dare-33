@@ -41,6 +41,7 @@ var projectilePool;
 
 // On load/constructor for game
 window.onload = function () {
+    window.globals = globals;
 	canvas = document.getElementById('game-canvas');
 	canvas.width = window.innerWidth - 10;
 	canvas.height = window.innerHeight - 10;
@@ -283,8 +284,8 @@ function drawChars() {
 }
 
 function drawMiniMap() {
-    miniMapCamera.x = camera.x / miniMapCamera.z + canvas.width / 2;
-    miniMapCamera.y = camera.y / miniMapCamera.z + canvas.height / 2;
+    miniMapCamera.x = camera.x * camera.z / miniMapCamera.z + canvas.width / 2;
+    miniMapCamera.y = camera.y * camera.z / miniMapCamera.z + canvas.height / 2;
 
     for(var i = 0; i < planets.length; i++) {
         planets[i].draw(ctx, miniMapCamera);

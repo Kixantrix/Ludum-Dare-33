@@ -11,7 +11,7 @@ function Player(x, y, camera, canvas) {
 	this.name = "Player";
 	this.crashSound = new Audio("sounds/Explosion20.wav");
 	this.crashSound.volume = 0.5;
-	this.maxVel = 15;
+	this.maxVel = 30;
 }
 
 Player.prototype = Object.create(Ship.prototype);
@@ -64,8 +64,10 @@ Player.prototype.update = function(input) {
 
 	this.angle += this.rotation;
 
-	this.camera.x = -(this.x - this.canvas.width / 2 - this.width / 2);
-	this.camera.y = -(this.y - this.canvas.height / 2 - this.height / 2);
+	this.camera.z = 1 + Math.sqrt(Math.abs(this.velX) + Math.abs(this.velY)) / 10;
+	if (this.camera.z > 10) this.camera.z = 10;
+
+	this.camera.center(this.x + this.width / 2, this.y + this.height / 2);
 };
 
 Player.prototype.onCollide = function (object) {
