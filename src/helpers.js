@@ -2,8 +2,8 @@
 
 var helpers = {
 	angle: function (object1, object2) {
-		var dx = object2.enemy.x - object1.x;
-		var dy = object2.enemy.y - object1.y;
+		var dx = object2.x - object1.x;
+		var dy = object2.y - object1.y;
 
 		return Math.PI / 2 + Math.atan2(dy, dx);
 	},

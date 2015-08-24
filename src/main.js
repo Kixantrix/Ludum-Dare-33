@@ -24,6 +24,7 @@ var canvas;
 var ctx;
 
 var objectBoxes = require('./objectBoxes');
+var CivilianShip = require('./civilianShip');
 
 // Variables for global objects
 var camera;
@@ -32,6 +33,7 @@ var background;
 window.paused = false;
 var player;
 var enemy;
+var civilianShip;
 var ball;
 var input;
 var asteroidField;
@@ -59,6 +61,8 @@ window.onload = function () {
     ball = new Ball(200, 200);
     input = new Input(canvas);
     enemy = new Ship(500, 500, camera, canvas, "images/spaceships/alienspaceship.png");
+    civilianShip = new CivilianShip(700, 500, camera, canvas, 'Red', 0);
+
     background = new Background();
     asteroidField = new AsteroidField(1000, 1000, 2000, 150);
     asteroidRing = new AsteroidRing(-1000, -1000, 700, 900, 100);
@@ -68,7 +72,7 @@ window.onload = function () {
     planets.push(new Planet(1000, 3000, 300, "images/planets/p2shaded.png", false));
     planets.push(new Planet(2000, 1700, 600, "images/planets/p3shaded.png", true));
     planets.push(new Planet(1500, -1500, 950, "images/planets/p4shaded.png", false));
-    var box = [player, ball, enemy].concat(asteroidField.asteroids).concat(asteroidRing.asteroids);
+    var box = [player, ball, enemy, civilianShip].concat(asteroidField.asteroids).concat(asteroidRing.asteroids);
     
     for(var i = 0; i < planets.length; i++) {
         box = box.concat(planets[i].getAsteroids());
@@ -119,7 +123,7 @@ function update() {
 
     globals.frameCount++;
 
-    var objects = [player, ball, enemy]
+    var objects = [player, ball, enemy, civilianShip]
     objects = objects.concat(asteroidField.asteroids);
     objects = objects.concat(asteroidRing.asteroids);
     objects = objects.concat(projectilePool.projectiles);
@@ -129,6 +133,7 @@ function update() {
     
     player.update(input);
     enemy.update(objects);
+    civilianShip.update(input);
     asteroidField.update();
     asteroidRing.update();
     doCollisions(objects);
@@ -279,6 +284,7 @@ function drawBackground() {
 function drawChars() {
     ball.draw(ctx, camera);
     enemy.draw(ctx, camera);
+    civilianShip.draw(ctx, camera);
     projectilePool.draw(ctx, camera);
     player.draw(ctx, camera);
 }
@@ -296,6 +302,7 @@ function drawMiniMap() {
 
     ball.draw(ctx, miniMapCamera);
     enemy.draw(ctx, miniMapCamera);
+    civilianShip.draw(ctx, miniMapCamera);
     projectilePool.draw(ctx, miniMapCamera);
     player.draw(ctx, miniMapCamera);
 }
