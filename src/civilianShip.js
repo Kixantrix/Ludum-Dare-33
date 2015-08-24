@@ -37,12 +37,6 @@ function CivilianShip(x, y, camera, canvas, faction, num) {
 	]
 }
 
-<<<<<<< HEAD
-CivilianShip.prototype = Object.create(Ship.prototype);
-CivilianShip.prototype.constructor = CivilianShip;
-
-=======
-
 CivilianShip.prototype = Object.create(Ship.prototype);
 CivilianShip.prototype.constructor = CivilianShip;
 
@@ -111,5 +105,4 @@ CivilianShip.prototype.update = function() {
 	
 	this.angle += this.rotation;
 }
->>>>>>> origin/master
 module.exports = CivilianShip;

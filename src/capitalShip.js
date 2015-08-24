@@ -18,9 +18,9 @@ function CapitalShip(x, y, camera, canvas, faction, num) {
 	this.maxShields = 500;
 	this.shields = 500;
 
-	this.image = this.faction.images['captialShip'];
+	this.image = this.faction.images['capitalShip'];
 
-	this.name = faction.name + " " + "captialShip " + num;
+	this.name = faction.name + " " + "capitalShip " + num;
 
 	this.weapon = new Weapon(100, 150, 20);
 
