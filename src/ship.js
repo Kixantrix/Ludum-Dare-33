@@ -54,9 +54,11 @@ Ship.prototype.thrust = function(accel) {
 	if((newVel < this.maxVel) || (newVel < oldVel)) {
 		this.velX = newVelX;
 		this.velY = newVelY;
+	} else {
+		this.velX = newVelX * this.maxVel / newVel;
+		this.velY = newVelY * this.maxVel / newVel;
 	}
-	// Thrust has been applied
-	return true;
+	this.thrustApplied = true;
 }
 
 // Fire method
@@ -71,12 +73,13 @@ Ship.prototype.thrustAccel = function(accel) {
 	if(Math.abs(this.rotation + accel) < this.maxRotationSpeed) {
 		this.rotation += accel;
 	}
-	return true;
+
+	this.rotationApplied = true;
 }
 
 Ship.prototype.update = function(objects) {
-	var rotationApplied = false;
-	var thrustApplied = false;
+	this.rotationApplied = false;
+	this.thrustApplied = false;
 
 	// Find closest enemy
 	var closestEnemy = {};
@@ -97,7 +100,7 @@ Ship.prototype.update = function(objects) {
 			// RUN AWAY?
 
 		} else {
-			var angle = helpers.angle(this, closestEnemy);
+			var angle = helpers.angle(this, closestEnemy.enemy);
 			var angleDiff = helpers.angleDiff(this.angle, angle);
 
 			//console.log('angleDiff', angleDiff);
@@ -142,7 +145,7 @@ Ship.prototype.update = function(objects) {
 		}
 	}
 
-	if(!thrustApplied) {
+	if(!this.thrustApplied) {
 		if(this.velX < 0.1 && this.velX > -0.1) {
 			this.velX = 0;
 		} else {
@@ -156,7 +159,7 @@ Ship.prototype.update = function(objects) {
 		}
 	}
 
-	if(!rotationApplied) {
+	if(!this.rotationApplied) {
 		if(this.rotation < 0.001 && this.rotation > -0.001) {
 			this.rotation = 0;
 		} else {
@@ -165,6 +168,46 @@ Ship.prototype.update = function(objects) {
 	} 
 	
 	this.angle += this.rotation;
+};
+
+Ship.prototype.turnTo = function(object, alignedCallback) {
+	var angle = helpers.angle(this, object);
+	var angleDiff = helpers.angleDiff(this.angle, angle);
+
+	//console.log('angleDiff', angleDiff);
+
+	var decelerateRotation;
+	if (this.rotation !== 0) {
+		decelerateRotation = -this.rotation / Math.abs(this.rotation) * 0.005;
+	} else {
+		decelerateRotation = -0.01;
+	}
+
+	if (this.rotation > 0.1) { //Slow down
+		this.thrustAccel(decelerateRotation);
+		if (Math.abs(angleDiff) < 0.3) this.thrust(0.5);
+		return;
+	} else {
+		var finalAngle = angleDiff - this.rotation * this.rotation / decelerateRotation / 2;
+		finalAngle = helpers.mod((finalAngle + Math.PI), (Math.PI * 2)) - Math.PI;
+		//console.log('finalAngle', finalAngle);
+		if (finalAngle > Math.PI / 2 || finalAngle < -Math.PI / 2) {
+			if (Math.abs(this.rotation) > 0.05) {
+				this.thrustAccel(decelerateRotation);
+			} else {
+				this.thrustAccel(-angleDiff / Math.abs(angleDiff) * 0.01);
+			}
+		} else if (finalAngle > 0.01) {
+			this.thrustAccel(-0.01);
+		} else if (finalAngle < -0.01) {
+			this.thrustAccel(0.01);
+		} else {
+			this.thrustAccel(decelerateRotation);
+			if (angleDiff < 0.3 && angleDiff > -0.3) {
+				if (alignedCallback) alignedCallback();
+			}
+		}
+	}
 };
 
 Ship.prototype.draw = function (ctx, camera) {
