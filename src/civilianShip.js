@@ -46,6 +46,8 @@ CivilianShip.prototype.update = function() {
 	var dy = destination.y - this.y;
 	var distanceToDestination = Math.abs(dx) + Math.abs(dy);
 
+	this.regenShields();
+
 	if (distanceToDestination < 400) {
 		var stopped = Math.abs(this.velX) + Math.abs(this.velY) < 5;
 		if (stopped) {

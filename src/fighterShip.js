@@ -38,6 +38,8 @@ FighterShip.prototype.update = function(objects) {
 	this.rotationApplied = false;
 	this.thrustApplied = false;
 
+	this.regenShields();
+
 	// Find closest enemy
 	var closestEnemy = {};
 	for(var i = 0; i < objects.length; i++) {

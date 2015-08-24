@@ -36,6 +36,7 @@ Freighter.prototype = Object.create(Ship.prototype);
 Freighter.prototype.constructor = Freighter;
 
 Freighter.prototype.update = function() {
+	this.regenShields();
 	var destination = this.destinations[this.destinationIndex];
 	var dx = destination.x - this.x;
 	var dy = destination.y - this.y;

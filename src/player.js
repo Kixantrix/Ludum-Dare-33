@@ -21,6 +21,8 @@ Player.prototype.update = function(input) {
 	var rotationApplied = false;
 	var thrustApplied = false;
 
+	this.regenShields();
+
 	if (input.keys[68]) {//D
 		rotationApplied = this.thrustAccel(0.01);
 	}

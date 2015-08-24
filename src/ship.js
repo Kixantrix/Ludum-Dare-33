@@ -13,6 +13,7 @@ function Ship(x, y, camera, canvas, src) {
 	this.angle = 0;
 	this.camera = camera;
 	this.canvas = canvas;
+	this.lastRegen = -1000;
 
 	this.velX = 0;
 	this.velY = 0;
@@ -92,6 +93,15 @@ Ship.prototype.onHit = function (damage, source) {
 Ship.prototype.remove = function() {
 }
 
+Ship.prototype.regenShields = function() {
+	if(globals.frameCount - this.lastRegen > 15) {
+		this.lastRegen = globals.frameCount;
+		if(this.shields < this.maxShields) {
+			this.shields++;
+		}		
+	}
+}
+
 Ship.prototype.thrustAccel = function(accel) {
 
 	if(Math.abs(this.rotation + accel) < this.maxRotationSpeed) {
@@ -104,6 +114,8 @@ Ship.prototype.thrustAccel = function(accel) {
 Ship.prototype.update = function(objects) {
 	this.rotationApplied = false;
 	this.thrustApplied = false;
+
+	this.regenShields();
 
 	// Find closest enemy
 	var closestEnemy = {};
