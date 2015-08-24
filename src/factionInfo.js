@@ -9,11 +9,14 @@ var factionInfo = {
 		},
 		"civilianRoute": [
 			{
-				x: -1000,
-				y: 0
+				x: 4000,
+				y: 3000
 			}, {
-				x: 1000,
-				y: 1000
+				x: 3000,
+				y: -1000
+			}, {
+				x: 10000,
+				y: 0
 			}
 		],
 		"ships": {
@@ -50,11 +53,11 @@ var factionInfo = {
 		},
 		"civilianRoute": [
 			{
-				x: -1000,
+				x: -10500,
 				y: 0
 			}, {
-				x: 1000,
-				y: 1000
+				x: 2500,
+				y: -1000
 			}
 		],
 		"ships": {
@@ -92,10 +95,10 @@ var factionInfo = {
 		"civilianRoute": [
 			{
 				x: -1000,
-				y: 0
+				y: 2000
 			}, {
-				x: 1000,
-				y: 1000
+				x: 4000,
+				y: 3000
 			}
 		],
 		"ships": {
@@ -132,11 +135,14 @@ var factionInfo = {
 		},
 		"civilianRoute": [
 			{
-				x: -1000,
-				y: 0
-			}, {
 				x: 1000,
-				y: 1000
+				y: 10000
+			}, {
+				x: 7000,
+				y: 5000
+			}, {
+				x: 4000,
+				y: 3000
 			}
 		],
 		"ships": {
@@ -173,11 +179,11 @@ var factionInfo = {
 		},
 		"civilianRoute": [
 			{
-				x: 3000,
+				x: -9500,
 				y: 0
 			}, {
-				x: -1000,
-				y: -2000
+				x: 3500,
+				y: -1000
 			}
 		],
 		"ships": {
@@ -248,7 +254,7 @@ var factionInfo = {
 
 	"Orange": {
 		"planet": {
-			"x": 70000,
+			"x": 7000,
 			"y": 5000,
 			"size": 1000,
 			"src": "images/planets/p3shaded.png",
@@ -256,19 +262,19 @@ var factionInfo = {
 		},
 		"civilianRoute": [
 			{
-				x: 70000,
-				y: 10000
+				x: 7000,
+				y: 5500
 			}, {
-				x: 65000,
+				x: 6500,
 				y: 5000
 			}, {
-				x: 65000,
-				y: 0000
+				x: 6500,
+				y: 3000
 			}, {
-				x: 60000,
-				y: -500
+				x: 6000,
+				y: 3000
 			}, {
-				x: 75000,
+				x: 7500,
 				y: 5000
 			}
 		],
