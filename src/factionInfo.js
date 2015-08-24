@@ -13,19 +13,19 @@ var factionInfo = {
 				"src": "images/spaceships/alien3.png"
 			},
 			"civilian": {
-				"num": 5,
+				"num": 2,
 				"src": "images/spaceships/alien4.png"
 			},
 			"freighter": {
-				"num": 3,
+				"num": 2,
 				"src": "images/spaceships/heavyfreighter.png"
 			},
 			"gunShip": {
-				"num": 5,
+				"num": 3,
 				"src": "images/spaceships/alien2.png"
 			},
 			"capitalShip": {
-				"num": 2,
+				"num": 1,
 				"src": "images/spaceships/alien1.png"
 			}
 		}
@@ -45,19 +45,19 @@ var factionInfo = {
 				"src": "images/spaceships/att5.png"
 			},
 			"civilian": {
-				"num": 5,
+				"num": 2,
 				"src": "images/spaceships/att3.png"
 			},
 			"freighter": {
-				"num": 3,
+				"num": 2,
 				"src": "images/spaceships/heavyfreighter.png"
 			},
 			"gunShip": {
-				"num": 5,
+				"num": 3,
 				"src": "images/spaceships/blue1.png"
 			},
 			"capitalShip": {
-				"num": 2,
+				"num": 1,
 				"src": "images/spaceships/blue2.png"
 			}
 		}
@@ -77,19 +77,19 @@ var factionInfo = {
 				"src": "images/spaceships/wship-4.png"
 			},
 			"civilian": {
-				"num": 5,
+				"num": 2,
 				"src": "images/spaceships/wship-2.png"
 			},
 			"freighter": {
-				"num": 3,
+				"num": 2,
 				"src": "images/spaceships/xspr5.png"
 			},
 			"gunShip": {
-				"num": 5,
+				"num": 3,
 				"src": "images/spaceships/wship1.png"
 			},
 			"capitalShip": {
-				"num": 2,
+				"num": 1,
 				"src": "images/spaceships/wship-3.png"
 			}
 		}
@@ -109,19 +109,19 @@ var factionInfo = {
 				"src": "images/spaceships/RD2.png"
 			},
 			"civilian": {
-				"num": 5,
+				"num": 2,
 				"src": "images/spaceships/RD3.png"
 			},
 			"freighter": {
-				"num": 3,
+				"num": 2,
 				"src": "images/spaceships/heavyfreighter.png"
 			},
 			"gunShip": {
-				"num": 5,
+				"num": 3,
 				"src": "images/spaceships/RD1.png"
 			},
 			"capitalShip": {
-				"num": 2,
+				"num": 1,
 				"src": "images/spaceships/att2.png"
 			}
 		}
@@ -142,19 +142,19 @@ var factionInfo = {
 				"src": "images/spaceships/blueship2.png"
 			},
 			"civilian": {
-				"num": 5,
+				"num": 2,
 				"src": "images/spaceships/blueship4.png"
 			},
 			"freighter": {
-				"num": 3,
+				"num": 2,
 				"src": "images/spaceships/heavyfreighter.png"
 			},
 			"gunShip": {
-				"num": 5,
+				"num": 3,
 				"src": "images/spaceships/blueship3.png"
 			},
 			"capitalShip": {
-				"num": 2,
+				"num": 1,
 				"src": "images/spaceships/blueship1.png"
 			}
 		}
@@ -174,19 +174,19 @@ var factionInfo = {
 				"src": "images/spaceships/greenship2.png"
 			},
 			"civilian": {
-				"num": 5,
+				"num": 2,
 				"src": "images/spaceships/greenship3.png"
 			},
 			"freighter": {
-				"num": 3,
+				"num": 2,
 				"src": "images/spaceships/heavyfreighter.png"
 			},
 			"gunShip": {
-				"num": 5,
+				"num": 3,
 				"src": "images/spaceships/greenship4.png"
 			},
 			"capitalShip": {
-				"num": 2,
+				"num": 1,
 				"src": "images/spaceships/greenship1.png"
 			}
 		}
@@ -206,19 +206,19 @@ var factionInfo = {
 				"src": "images/spaceships/smallorange.png"
 			},
 			"civilian": {
-				"num": 5,
+				"num": 2,
 				"src": "images/spaceships/orangeship3.png"
 			},
 			"freighter": {
-				"num": 3,
+				"num": 2,
 				"src": "images/spaceships/heavyfreighter.png"
 			},
 			"gunShip": {
-				"num": 5,
+				"num": 3,
 				"src": "images/spaceships/orangeship2.png"
 			},
 			"capitalShip": {
-				"num": 2,
+				"num": 1,
 				"src": "images/spaceships/orangeship.png"
 			}
 		}
