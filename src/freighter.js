@@ -35,7 +35,6 @@ function Freighter(x, y, camera, canvas, faction, num) {
 Freighter.prototype = Object.create(Ship.prototype);
 Freighter.prototype.constructor = Freighter;
 
-
 Freighter.prototype.update = function() {
 	var destination = this.destinations[this.destinationIndex];
 	var dx = destination.x - this.x;
@@ -98,6 +97,9 @@ Freighter.prototype.update = function() {
 	} 
 	
 	this.angle += this.rotation;
+// Remove function
+Freighter.prototype.remove = function() {
+	this.faction.remove(this);
 }
 
 module.exports = Freighter;

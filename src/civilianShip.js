@@ -35,6 +35,11 @@ function CivilianShip(x, y, camera, canvas, faction, num) {
 CivilianShip.prototype = Object.create(Ship.prototype);
 CivilianShip.prototype.constructor = CivilianShip;
 
+// Remove function
+CivilianShip.prototype.remove = function() {
+	this.faction.remove(this);
+}
+
 CivilianShip.prototype.update = function() {
 	var destination = this.destinations[this.destinationIndex];
 	var dx = destination.x - this.x;

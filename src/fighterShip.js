@@ -34,7 +34,6 @@ function FighterShip(x, y, camera, canvas, faction, num, friendlyTarget) {
 FighterShip.prototype = Object.create(Ship.prototype);
 FighterShip.prototype.constructor = FighterShip;
 
-
 FighterShip.prototype.update = function(objects) {
 	this.rotationApplied = false;
 	this.thrustApplied = false;
@@ -142,5 +141,9 @@ FighterShip.prototype.update = function(objects) {
 	
 	this.angle += this.rotation;
 };
+// Remove function
+FighterShip.prototype.remove = function() {
+	this.faction.remove(this);
+}
 
 module.exports = FighterShip;
