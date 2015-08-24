@@ -7,6 +7,15 @@ var factionInfo = {
 			"src": "images/planets/p4shaded.png",
 			"hasRing": false
 		},
+		"civilianRoute": [
+			{
+				x: -1000,
+				y: 0
+			}, {
+				x: 1000,
+				y: 1000
+			}
+		],
 		"ships": {
 			"fighter": {
 				"num": 5,
@@ -39,6 +48,15 @@ var factionInfo = {
 			"src": "images/planets/p10shaded.png",
 			"hasRing": false
 		},
+		"civilianRoute": [
+			{
+				x: -1000,
+				y: 0
+			}, {
+				x: 1000,
+				y: 1000
+			}
+		],
 		"ships": {
 			"fighter": {
 				"num": 5,
@@ -71,6 +89,15 @@ var factionInfo = {
 			"src": "images/planets/p9shaded.png",
 			"hasRing": false
 		},
+		"civilianRoute": [
+			{
+				x: -1000,
+				y: 0
+			}, {
+				x: 1000,
+				y: 1000
+			}
+		],
 		"ships": {
 			"fighter": {
 				"num": 5,
@@ -103,6 +130,15 @@ var factionInfo = {
 			"src": "images/planets/redplanet.png",
 			"hasRing": false
 		},
+		"civilianRoute": [
+			{
+				x: -1000,
+				y: 0
+			}, {
+				x: 1000,
+				y: 1000
+			}
+		],
 		"ships": {
 			"fighter": {
 				"num": 5,
@@ -135,6 +171,15 @@ var factionInfo = {
 			"src": "images/planets/p2shaded.png",
 			"hasRing": false
 		},
+		"civilianRoute": [
+			{
+				x: 3000,
+				y: 0
+			}, {
+				x: -1000,
+				y: -2000
+			}
+		],
 		"ships": {
 
 			"fighter": {
@@ -168,6 +213,15 @@ var factionInfo = {
 			"src": "images/planets/greenplanet.png",
 			"hasRing": false
 		},
+		"civilianRoute": [
+			{
+				x: 10000,
+				y: 0
+			}, {
+				x: 6000,
+				y: 1000
+			}
+		],
 		"ships": {
 			"fighter": {
 				"num": 5,
@@ -200,6 +254,24 @@ var factionInfo = {
 			"src": "images/planets/p3shaded.png",
 			"hasRing": false 
 		},
+		"civilianRoute": [
+			{
+				x: 70000,
+				y: 10000
+			}, {
+				x: 65000,
+				y: 5000
+			}, {
+				x: 65000,
+				y: 0000
+			}, {
+				x: 60000,
+				y: -500
+			}, {
+				x: 75000,
+				y: 5000
+			}
+		],
 		"ships": {
 			"fighter": {
 				"num": 5,

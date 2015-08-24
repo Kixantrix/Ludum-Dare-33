@@ -40,6 +40,9 @@ function Ship(x, y, camera, canvas, src) {
 	this.enemies['Player'] = true;
 	this.name = "Enemy";
 
+	this.oldDistance = 100000000000000;
+	this.oldAngle = 0;
+
 	this.weapon = new Weapon(50, 30, 20);
 }
 
@@ -100,7 +103,14 @@ Ship.prototype.update = function(objects) {
 			// RUN AWAY?
 
 		} else {
-			var angle = helpers.angle(this, closestEnemy.enemy);
+			var distance = closestEnemy.distance;
+			var ratio = distance / this.oldDistance;
+			var angle = this.oldAngle;
+			if (ratio < 0.9 || ratio > 1.1) {
+				angle = helpers.angle(this, closestEnemy.enemy);
+				this.oldDistance = distance;
+				this.oldAngle = angle;
+			}
 			var angleDiff = helpers.angleDiff(this.angle, angle);
 
 			//console.log('angleDiff', angleDiff);

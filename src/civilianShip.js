@@ -29,14 +29,7 @@ function CivilianShip(x, y, camera, canvas, faction, num) {
 	this.weapon = null;
 
 	this.destinationIndex = 0;
-	this.destinations = [
-		{x: -1000,
-			y: 0
-		}, {
-			x: 1000,
-			y: 1000
-		}
-	]
+	this.destinations = this.faction.civilianRoute;
 }
 
 CivilianShip.prototype = Object.create(Ship.prototype);

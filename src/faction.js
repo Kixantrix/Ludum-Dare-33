@@ -20,6 +20,7 @@ function Faction(name) {
 	var basePlanet = factionInfo[name].planet;
 	this.basePlanet = new Planet(basePlanet.x, basePlanet.y, basePlanet.size, basePlanet.src, basePlanet.hasRing);
 
+	this.civilianRoute = factionInfo[name].civilianRoute;
 	// Map of enemies and booleans. Eg, this.enemies['orange'] = true
 	this.enemies = {};
 
