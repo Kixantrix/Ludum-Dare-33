@@ -1,5 +1,7 @@
 "use strict";
 
+var helpers = require('./helpers');
+
 var Ball = require('./ball');
 var xPlusYDistance = require('./point')['xPlusYDistance'];
 var Weapon = require('./weapon');
@@ -72,10 +74,6 @@ Ship.prototype.thrustAccel = function(accel) {
 	return true;
 }
 
-function mod(n, k) {
-	return ((n % k) + k) % k;
-}
-
 Ship.prototype.update = function(objects) {
 	var rotationApplied = false;
 	var thrustApplied = false;
@@ -99,18 +97,14 @@ Ship.prototype.update = function(objects) {
 			// RUN AWAY?
 
 		} else {
-			var angleDiff;
-			var dx = closestEnemy.enemy.x - this.x;
-			var dy = closestEnemy.enemy.y - this.y;
-
-			var angle = Math.PI / 2 + Math.atan2(dy, dx);
-			var angleDiff = mod((this.angle - angle + Math.PI), (Math.PI * 2)) - Math.PI;
+			var angle = helpers.angle(this, closestEnemy);
+			var angleDiff = helpers.angleDiff(this.angle, angle);
 
 			//console.log('angleDiff', angleDiff);
 
 			var decelerateRotation;
 			if (this.rotation !== 0) {
-				decelerateRotation = -this.rotation / Math.abs(this.rotation) * 0.01;
+				decelerateRotation = -this.rotation / Math.abs(this.rotation) * 0.005;
 			} else {
 				decelerateRotation = -0.01;
 			}
@@ -121,7 +115,7 @@ Ship.prototype.update = function(objects) {
 				return;
 			} else {
 				var finalAngle = angleDiff - this.rotation * this.rotation / decelerateRotation / 2;
-				finalAngle = mod((finalAngle + Math.PI), (Math.PI * 2)) - Math.PI;
+				finalAngle = helpers.mod((finalAngle + Math.PI), (Math.PI * 2)) - Math.PI;
 				//console.log('finalAngle', finalAngle);
 				if (finalAngle > Math.PI / 2 || finalAngle < -Math.PI / 2) {
 					if (Math.abs(this.rotation) > 0.05) {
@@ -134,6 +128,7 @@ Ship.prototype.update = function(objects) {
 				} else if (finalAngle < -0.01) {
 					this.thrustAccel(0.01);
 				} else {
+					this.thrustAccel(decelerateRotation);
 					if (angleDiff < 0.3 && angleDiff > -0.3) {
 						this.thrust(0.5);
 						if (closestEnemy.distance < 500) {
