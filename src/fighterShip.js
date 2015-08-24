@@ -57,7 +57,7 @@ FighterShip.prototype.update = function(objects) {
 	var friendly;
 
 	// Head towards closest enemy is far away
-	if(closestEnemy.enemy && closestEnemy.distance < 500) {
+	if(closestEnemy.enemy && closestEnemy.distance < 1000) {
 		target = closestEnemy.enemy;
 		distance = closestEnemy.distance;
 		friendly = false;

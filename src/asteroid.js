@@ -3,6 +3,9 @@
 var Ball = require('./ball');
 var globals = require('./globals');
 
+var crashSound;
+var explodeSound;
+
 function Asteroid(x, y, size, pool) {
 	Ball.apply(this, [x, y]);
 
@@ -16,8 +19,13 @@ function Asteroid(x, y, size, pool) {
 
 	this.pool = pool;
 
-	this.crashSound = new Audio("sounds/AsteroidCrash.wav");
-	this.explodeSound = new Audio("sounds/AsteroidExplosion.wav");
+	if (!crashSound)
+		crashSound = new Audio("sounds/AsteroidCrash.wav");
+	if (!explodeSound)
+		explodeSound = new Audio("sounds/AsteroidExplosion.wav");
+
+	this.crashSound = crashSound.cloneNode();
+	this.explodeSound = explodeSound.cloneNode();
 
 	this.type = 'asteroid';
 }
