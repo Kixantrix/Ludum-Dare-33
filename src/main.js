@@ -151,6 +151,8 @@ function update() {
     doCollisions(objects);
 }
 
+var boxes = [[-1, -1], [0, -1], [1, -1], [-1, 0], [0, 0]];
+
 // Checks for collisions between objects. If they exist, completes momentum transfers.
 function doCollisions(objects) {
     var currentT = 0;
@@ -161,47 +163,47 @@ function doCollisions(objects) {
         minObject1 = undefined;
         minObject2 = undefined;
         for (var i = 0; i < objects.length; i++) {
-            for (var boxX = -1; boxX < 2; boxX++) {
-                for (var boxY = -1; boxY < 2; boxY++) {
-                    var boxXnew = boxX + objects[i].boxX;
-                    var boxYnew = boxY + objects[i].boxY;
-                    if (!objectBoxes[[boxXnew, boxYnew]] ||
-                        !objectBoxes[[boxXnew, boxYnew]].length) continue;
-                    for (var j = 0; j < objectBoxes[[boxXnew, boxYnew]].length; j++) {
-                        var object2 = objectBoxes[[boxXnew, boxYnew]][j];
-                        var dx = object2.x - objects[i].x;
-                        var dy = object2.y - objects[i].y;
+            for (var index = 0; index < boxes.length; index++) {
+                var boxX = boxes[index][0];
+                var boxY = boxes[index][1];
+                var boxXnew = boxX + objects[i].boxX;
+                var boxYnew = boxY + objects[i].boxY;
+                if (!objectBoxes[[boxXnew, boxYnew]] ||
+                    !objectBoxes[[boxXnew, boxYnew]].length) continue;
+                for (var j = 0; j < objectBoxes[[boxXnew, boxYnew]].length; j++) {
+                    var object2 = objectBoxes[[boxXnew, boxYnew]][j];
+                    var dx = object2.x - objects[i].x;
+                    var dy = object2.y - objects[i].y;
 
-                        var dvx = object2.velX - objects[i].velX;
-                        var dvy = object2.velY - objects[i].velY;
+                    var dvx = object2.velX - objects[i].velX;
+                    var dvy = object2.velY - objects[i].velY;
 
-                        var ri = objects[i].radius;
-                        var rj = object2.radius;
-                        var r = ri + rj;
+                    var ri = objects[i].radius;
+                    var rj = object2.radius;
+                    var r = ri + rj;
 
-                        var b = 2 * (dvx * dx + dvy * dy);
-                        if (b > 0) {
-                            continue;
-                        }
+                    var b = 2 * (dvx * dx + dvy * dy);
+                    if (b > 0) {
+                        continue;
+                    }
 
-                        var a = (dvx * dvx + dvy * dvy);
-                        var c = (dx * dx + dy * dy - r * r);
+                    var a = (dvx * dvx + dvy * dvy);
+                    var c = (dx * dx + dy * dy - r * r);
 
-                        var discriminant = b * b - 4 * a * c;
-                        if (discriminant < 0) {
-                            continue;
-                        }
+                    var discriminant = b * b - 4 * a * c;
+                    if (discriminant < 0) {
+                        continue;
+                    }
 
-                        var t = (-b - Math.sqrt(discriminant)) / 2 / a;
-                        //console.log(t, minT);
-                        if (t > 1 || t <= 0) continue;
-                        //if (t < 1 && t > 0)
-                        //    console.log("THERE WILL BE A COLLISION");
-                        if (t < minT) {
-                            minT = t;
-                            minObject1 = objects[i];
-                            minObject2 = object2;
-                        }
+                    var t = (-b - Math.sqrt(discriminant)) / 2 / a;
+                    //console.log(t, minT);
+                    if (t > 1 || t <= 0) continue;
+                    //if (t < 1 && t > 0)
+                    //    console.log("THERE WILL BE A COLLISION");
+                    if (t < minT) {
+                        minT = t;
+                        minObject1 = objects[i];
+                        minObject2 = object2;
                     }
                 }
             }
