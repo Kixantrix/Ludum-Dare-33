@@ -12,6 +12,7 @@ function Player(x, y, camera, canvas) {
 	this.crashSound = new Audio("sounds/Explosion20.wav");
 	this.crashSound.volume = 0.5;
 	this.maxVel = 30;
+	this.points = 0;
 }
 
 Player.prototype = Object.create(Ship.prototype);
@@ -79,7 +80,9 @@ Player.prototype.onCollide = function (object) {
 Player.prototype.draw = function(ctx, camera) {
 	Ship.prototype.draw.call(this, ctx, camera);
 	this.drawHealthBar(ctx);
-	ctx.fillText(this.x + ", " + this.y, 10, 10);
+	ctx.fillText(this.x + ", " + this.y, 50, 50);
+	ctx.textAlign = "left";      
+	ctx.fillText("Points: " + this.points, globals.canvas.width / 2, globals.canvas.height - 50);
 
 }
 

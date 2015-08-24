@@ -15,6 +15,7 @@ function Ship(x, y, camera, canvas, src) {
 	this.canvas = canvas;
 	this.lastRegen = -1000;
 
+
 	this.velX = 0;
 	this.velY = 0;
 	// Max linear velocity of ship (x and y hypotenuse)
@@ -32,6 +33,8 @@ function Ship(x, y, camera, canvas, src) {
 	this.maxhp = this.hp;
 	this.maxShields = 50;
 	this.shields = 50;
+
+	this.points = this.maxhp;
 
 	this.image = new Image();
 	this.image.src = src;
@@ -73,16 +76,19 @@ Ship.prototype.fire = function() {
 }
 
 Ship.prototype.onHit = function (damage, source) {
-	if (source === this.name || source.split(' ')[0] === this.faction) {
+	if (source.name === this.name || source.name.split(' ')[0] === this.faction) {
 
-	} else {
-		this.enemies[source] = true;
+	} else if(source){
+		this.enemies[source.name] = true;
 	}
 	if(damage > this.shields) {
 		damage -= this.shields;
 		this.shields = 0;
 		this.hp -= damage;
 		if(this.hp <= 0) {
+			if(source) {
+				source.points += this.points;
+			}
 			this.remove();
 		}
 	} else {
@@ -177,7 +183,7 @@ Ship.prototype.update = function(objects) {
 					this.thrustAccel(decelerateRotation);
 					if (angleDiff < 0.3 && angleDiff > -0.3) {
 						this.thrust(0.5);
-						if (closestEnemy.distance < 500) {
+						if (closestEnemy.distance < 500 + this.height) {
 							this.weapon.fire(this);
 						}
 					}

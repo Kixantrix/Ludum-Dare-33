@@ -23,8 +23,8 @@ Projectile.prototype = Object.create(Ball.prototype);
 Projectile.prototype.constructor = Projectile;
 
 Projectile.prototype.onCollide = function(object) {
-	object.onHit(this.damage, this.origin.name);
-	this.remove()
+	object.onHit(this.damage, this.origin);
+	this.remove();
 }
 
 Projectile.prototype.remove = function() {

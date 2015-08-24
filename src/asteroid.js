@@ -43,6 +43,9 @@ Asteroid.prototype.explode = function() {
 Asteroid.prototype.onHit = function (damage, source) {
 	this.hp -= damage;
 	if(this.hp <= 0) {
+		if(source) {
+			source.points += 5;
+		}
 		this.pool.remove(this);
 	}
 }
