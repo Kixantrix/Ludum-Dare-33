@@ -24,6 +24,8 @@ function CapitalShip(x, y, camera, canvas, faction, num) {
 
 	this.weapon = new Weapon(100, 150, 20);
 
+	this.enemies = faction.enemies;
+
 }
 
 CapitalShip.prototype = Object.create(Ship.prototype);

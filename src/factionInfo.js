@@ -37,7 +37,7 @@ var factionInfo = {
 			"y": 0,
 			"size": 500,
 			"src": "images/planets/p10shaded.png",
-			"hasRing": true
+			"hasRing": false
 		},
 		"ships": {
 			"fighter": {
@@ -101,7 +101,7 @@ var factionInfo = {
 			"y": 10000,
 			"size": 800,
 			"src": "images/planets/redplanet.png",
-			"hasRing": true
+			"hasRing": false
 		},
 		"ships": {
 			"fighter": {
@@ -133,7 +133,7 @@ var factionInfo = {
 			"y": -1000,
 			"size": 600,
 			"src": "images/planets/p2shaded.png",
-			"hasRing": true
+			"hasRing": false
 		},
 		"ships": {
 
@@ -198,7 +198,7 @@ var factionInfo = {
 			"y": 5000,
 			"size": 1000,
 			"src": "images/planets/p3shaded.png",
-			"hasRing": true 
+			"hasRing": false 
 		},
 		"ships": {
 			"fighter": {

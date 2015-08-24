@@ -24,6 +24,8 @@ function GunShip(x, y, camera, canvas, faction, num) {
 
 	this.weapon = new Weapon(50, 60, 20);
 
+	this.enemies = faction.enemies;
+
 }
 
 GunShip.prototype = Object.create(Ship.prototype);

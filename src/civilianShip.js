@@ -20,6 +20,8 @@ function CivilianShip(x, y, camera, canvas, faction, num) {
 	this.maxShields = 30;
 	this.shields = 30;
 
+	this.enemies = faction.enemies;
+
 	//this.image = this.faction.images['civilian'];
 
 	this.name = faction.name + " " + "civilian " + num;
@@ -69,8 +71,6 @@ CivilianShip.prototype.update = function() {
 
 		var dot = finaldx * decelerationX + finaldy * decelerationY;
 
-		console.log(decelerationX, decelerationY);
-		console.log(finaldx, finaldy, dot);
 		if (dot > 1) {
 			this.thrust(-2);
 		} else if (dot < -1) {

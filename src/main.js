@@ -67,8 +67,8 @@ window.onload = function () {
     civilianShip = new CivilianShip(700, 500, camera, canvas, 'Red', 0);
 
     background = new Background();
-    asteroidField = new AsteroidField(1000, 1000, 2000, 150);
-    asteroidRing = new AsteroidRing(-1000, -1000, 700, 900, 100);
+    asteroidField = new AsteroidField(-10000, -15000, 2000, 150);
+    asteroidRing = new AsteroidRing(10000, 15000, 700, 900, 100);
     factions = [];
     planets = [];    
     for(name in factionInfo) {

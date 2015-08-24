@@ -24,6 +24,8 @@ function Freighter(x, y, camera, canvas, faction, num) {
 
 	this.name = faction.name + " " + "freighter " + num;
 
+	this.enemies = faction.enemies;
+
 	this.weapon = null;
 
 }
