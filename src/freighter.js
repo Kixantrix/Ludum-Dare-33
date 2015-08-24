@@ -30,6 +30,7 @@ function Freighter(x, y, camera, canvas, faction, num) {
 
 	this.destinationIndex = 0;
 	this.destinations = this.faction.civilianRoute;
+	this.destinationCountdown = 50;
 }
 
 Freighter.prototype = Object.create(Ship.prototype);
@@ -45,15 +46,19 @@ Freighter.prototype.update = function() {
 	if (distanceToDestination < 400) {
 		var stopped = Math.abs(this.velX) + Math.abs(this.velY) < 5;
 		if (stopped) {
-			// REACHED THE DESTINATION.
+			this.destinationCountdown--;
+			if (this.destinationCountdown <= 0) {
+				// REACHED THE DESTINATION.
 
-			this.destinationIndex += 1;
-			this.destinationIndex %= this.destinations.length;
+				this.destinationIndex += 1;
+				this.destinationIndex %= this.destinations.length;
 
-			destination = this.destinations[this.destinationIndex];
+				destination = this.destinations[this.destinationIndex];
 
-			dx = destination.x - this.x;
-			dy = destination.y - this.y;
+				dx = destination.x - this.x;
+				dy = destination.y - this.y;
+				this.destinationCountdown = 50;
+			}
 		}
 	}
 
