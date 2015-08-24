@@ -72,7 +72,11 @@ Ship.prototype.fire = function() {
 }
 
 Ship.prototype.onHit = function (damage, source) {
-	this.enemies[source] = true;
+	if (source === this.name || source.split(' ')[0] === this.faction) {
+
+	} else {
+		this.enemies[source] = true;
+	}
 	if(damage > this.shields) {
 		damage -= this.shields;
 		this.shields = 0;
