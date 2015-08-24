@@ -1,154 +1,86 @@
 "use strict";
 
 var globals = require('./globals');
+var Planet = require('./planet');
+var FighterShip = require('./fighterShip');
+var CivilianShip = require('./civilianShip');
+var Freighter = require('./freighter');
+var GunShip = require('./gunShip');
+var CapitalShip = require('./capitalShip');
 
 var factionNames = ["Organics", "Purple", "Dark Gray", "Red", "Blue", "Green", "Orange", "Gray"];
 
-var factionInfo = {
-	"Organics": {
-		"ships": {
-			"fighter": {
-				"src": "images/spaceships/alien3.png";
-			},
-			"civilian": {
-				"src": "images/spaceships/alien4.png";
-			},
-			"freighter": {
-				"src": "images/spaceships/heavyfreighter.png";
-			},
-			"gunShip": {
-				"src": "images/spaceships/alien2.png";
-			},
-			"capitalShip": {
-				"src": "images/spaceships/alien1.png"
-			}
-		}
-	},
+var factionInfo = require('./factionInfo');
+var camera = globals.camera;
+var canvas = globals.canvas;
 
-	"Purple": {
-		"ships": {
-			"fighter": {
-				"src": "images/spaceships/att5.png";
-			},
-			"civilian": {
-				"src": "images/spaceships/att3.png";
-			},
-			"freighter": {
-				"src": "images/spaceships/heavyfreighter.png";
-			},
-			"gunShip": {
-				"src": "images/spaceships/blue1.png";
-			},
-			"capitalShip": {
-				"src": "images/spaceships/blue2.png"
-			}
-		}
-	},
+function Faction(name) {
+	this.name = name;
 
-	"Gray": {
-		"ships": {
-		"ships": {
-			"fighter": {
-				"src": "images/spaceships/wship-4.png";
-			},
-			"civilian": {
-				"src": "images/spaceships/wship-2.png";
-			},
-			"freighter": {
-				"src": "images/spaceships/xspr5.png";
-			},
-			"gunShip": {
-				"src": "images/spaceships/wship1.png";
-			},
-			"capitalShip": {
-				"src": "images/spaceships/wship-3.png"
-			}
-		}
-	},
+	var basePlanet = factionInfo[name].planet;
+	this.basePlanet = new Planet(basePlanet.x, basePlanet.y, basePlanet.size, basePlanet.src, basePlanet.hasRing);
 
-	"Red": {
-		"ships": {
-			"fighter": {
-				"src": "images/spaceships/RD2.png";
-			},
-			"civilian": {
-				"src": "images/spaceships/RD3.png";
-			},
-			"freighter": {
-				"src": "images/spaceships/heavyfreighter.png";
-			},
-			"gunShip": {
-				"src": "images/spaceships/RD1.png";
-			},
-			"capitalShip": {
-				"src": "images/spaceships/att2.png"
-			}
-		}
-	},
+	// Map of enemies and booleans. Eg, this.enemies['orange'] = true
+	this.enemies = {};
 
-	"Blue": {
-		"ships": {
-			"fighter": {
-				"src": "images/spaceships/blueship2.png";
-			},
-			"civilian": {
-				"src": "images/spaceships/blueship4.png";
-			},
-			"freighter": {
-				"src": "images/spaceships/heavyfreighter.png";
-			},
-			"gunShip": {
-				"src": "images/spaceships/blueship3.png";
-			},
-			"capitalShip": {
-				"src": "images/spaceships/blueship1.png"
-			}
-		}
-	},
+	// Generate all ship objects, add to box
+	this.ships = [];
 
-	"Green": {
-		"ships": {
-			"fighter": {
-				"src": "images/spaceships/greenship2.png";
-			},
-			"civilian": {
-				"src": "images/spaceships/greenship3.png";
-			},
-			"freighter": {
-				"src": "images/spaceships/heavyfreighter.png";
-			},
-			"gunShip": {
-				"src": "images/spaceships/greenship4.png";
-			},
-			"capitalShip": {
-				"src": "images/spaceships/greenship1.png"
-			}
-		}
-	},
+	// Image resource of all ships so we can recycle images
+	this.images = {};
+	
+	// Fighters
+	for(var i = 0; i < factionInfo[name].ships.fighter.num; i++) {
+		this.images.fighter = new Image;
+		this.images.fighter.src = factionInfo[name].ships.fighter.src;
+		this.ships.push(new FighterShip(this.basePlanet.x + i * 120, this.basePlanet.y, camera, canvas, this, i));
+	}
 
-	"Orange": {
-		"ships": {
-			"fighter": {
-				"src": "images/spaceships/smallorange.png";
-			},
-			"civilian": {
-				"src": "images/spaceships/orangeship3.png";
-			},
-			"freighter": {
-				"src": "images/spaceships/heavyfreighter.png";
-			},
-			"gunShip": {
-				"src": "images/spaceships/orangeship2.png";
-			},
-			"capitalShip": {
-				"src": "images/spaceships/orangeship.png"
-			}
-		}
+	// Civilians
+	for(var i = 0; i < factionInfo[name].ships.civilian.num; i++) {
+		this.images.civilian = new Image;
+		this.images.civilian.src = factionInfo[name].ships.civilian.src;
+		this.ships.push(new CivilianShip(this.basePlanet.x + i * 150, this.basePlanet.y + 120, camera, canvas, this, i));
+	}
+
+	// Freighters
+	for(var i = 0; i < factionInfo[name].ships.freighter.num; i++) {
+		this.images.freighter = new Image;
+		this.images.freighter.src = factionInfo[name].ships.freighter.src;
+		this.ships.push(new Freighter(this.basePlanet.x + i * 400, this.basePlanet.y + 300, camera, canvas, this, i));
+	}
+
+	// Gunships
+	for(var i = 0; i < factionInfo[name].ships.gunShip.num; i++) {
+		this.images.gunShip = new Image;
+		this.images.gunShip.src = factionInfo[name].ships.gunShip.src;
+		this.ships.push(new GunShip(this.basePlanet.x + i * 300, this.basePlanet.y + 700, camera, canvas, this, i));
+	}
+
+	// Capital Ships
+	for(var i = 0; i < factionInfo[name].ships.capitalShip.num; i++) {
+		this.images.capitalShip = new Image;
+		this.images.capitalShip.src = factionInfo[name].ships.capitalShip.src;
+		this.ships.push(new CapitalShip(this.basePlanet.x + i * 600, this.basePlanet.y + 1300, camera, canvas, this, i));
 	}
 }
 
-function Faction(name) {
+// Draws ships
+Faction.prototype.drawShips = function(ctx, camera) {
+	for(var i = 0; i < this.ships.length; i++) {
+		this.ships[i].draw(ctx, camera);
+	}
+}
 
+// Draws planet
+Faction.prototype.drawPlanet = function(ctx, camera) {
+	this.basePlanet.draw(ctx, camera);
+}
+
+Faction.prototype.update = function(objects) {
+	for(var i = 0; i < this.ships.length; i++) {
+		this.ships[i].update(objects);
+	}
 }
 
 module.exports = Faction;

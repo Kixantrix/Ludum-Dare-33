@@ -1,10 +1,11 @@
-"use strict":
+"use strict";
 
 var Ship = require('./ship');
 var globals = require('./globals');
+var Weapon = require('./weapon');
 
-function freighterShip(x, y, camera, canvas, faction, num) {
-	Ship.apply(this, [x, y, camera, canvas, ""])
+function Freighter(x, y, camera, canvas, faction, num) {
+	Ship.apply(this, [x, y, camera, canvas, ""]);
 	this.faction = faction;
 
 	this.maxRotationSpeed = 0.05;
@@ -27,4 +28,4 @@ function freighterShip(x, y, camera, canvas, faction, num) {
 
 }
 
-module.exports = FreighterShip;
+module.exports = Freighter;
