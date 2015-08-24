@@ -256,9 +256,9 @@ var factionInfo = {
 		"planet": {
 			"x": 7000,
 			"y": 5000,
-			"size": 1000,
+			"size": 1200,
 			"src": "images/planets/p3shaded.png",
-			"hasRing": false 
+			"hasRing": true 
 		},
 		"civilianRoute": [
 			{

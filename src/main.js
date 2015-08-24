@@ -60,8 +60,8 @@ window.onload = function () {
     input = new Input(canvas);
 
     background = new Background();
-    asteroidField = new AsteroidField(-10000, -15000, 2000, 150);
-    asteroidRing = new AsteroidRing(10000, 15000, 700, 900, 100);
+    asteroidField = new AsteroidField(-800, -10000, 2000, 150);
+    asteroidRing = new AsteroidRing(-4000, 4000, 700, 900, 100);
     factions = [];
     planets = [];    
     for(name in factionInfo) {
