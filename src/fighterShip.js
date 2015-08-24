@@ -24,6 +24,8 @@ function FighterShip(x, y, camera, canvas, faction, num) {
 
 	this.weapon = new Weapon(20, 15, 40);
 
+	this.enemies = faction.enemies;
+
 }
 
 FighterShip.prototype = Object.create(Ship.prototype);
