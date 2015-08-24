@@ -31,4 +31,9 @@ function FighterShip(x, y, camera, canvas, faction, num) {
 FighterShip.prototype = Object.create(Ship.prototype);
 FighterShip.prototype.constructor = FighterShip;
 
+// Remove function
+FighterShip.prototype.remove = function() {
+	this.faction.remove(this);
+}
+
 module.exports = FighterShip;

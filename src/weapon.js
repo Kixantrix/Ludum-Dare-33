@@ -23,7 +23,7 @@ Weapon.prototype.fire = function(origin) {
 		new Projectile(origin.x, origin.y,
 			Math.sin(origin.angle) * this.speed + origin.velX,
 			 -Math.cos(origin.angle) * this.speed + origin.velY,
-			  globals.projectilePool);
+			  globals.projectilePool), origin, this.damage;
 	}
 }
 

@@ -7,6 +7,7 @@ var CivilianShip = require('./civilianShip');
 var Freighter = require('./freighter');
 var GunShip = require('./gunShip');
 var CapitalShip = require('./capitalShip');
+var objectBoxes = require('./objectBoxes');
 
 var factionNames = ["Organics", "Purple", "Dark Gray", "Red", "Blue", "Green", "Orange", "Gray"];
 
@@ -82,6 +83,12 @@ Faction.prototype.update = function(objects) {
 	for(var i = 0; i < this.ships.length; i++) {
 		this.ships[i].update(objects);
 	}
+}
+
+Faction.prototype.remove = function(ship) {
+	var indexOf = this.ships.indexOf(ship);
+	this.ships.splice(indexOf, 1);
+	objectBoxes.removeObject(ship);
 }
 
 module.exports = Faction;

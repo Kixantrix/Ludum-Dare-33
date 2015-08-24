@@ -2,13 +2,16 @@
 
 var Ball = require('./ball');
 
-function Projectile(x, y, velX, velY, pool) {
+function Projectile(x, y, velX, velY, pool, origin, damage) {
 	Ball.apply(this, [x, y]);
 	this.velX = velX;
 	this.velY = velY;
 	this.radius = 8;
 	this.width = 16;
 	this.height = 16;
+	this.origin = origin;
+	this.weight = 2;
+	this.damage = damage;
 
 	this.pool = pool;
 	this.pool.addProjectile(this);

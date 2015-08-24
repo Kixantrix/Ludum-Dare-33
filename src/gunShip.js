@@ -31,4 +31,9 @@ function GunShip(x, y, camera, canvas, faction, num) {
 GunShip.prototype = Object.create(Ship.prototype);
 GunShip.prototype.constructor = GunShip;
 
+// Remove function
+GunShip.prototype.remove = function() {
+	this.faction.remove(this);
+}
+
 module.exports = GunShip;

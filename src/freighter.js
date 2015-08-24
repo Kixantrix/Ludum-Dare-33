@@ -33,4 +33,9 @@ function Freighter(x, y, camera, canvas, faction, num) {
 Freighter.prototype = Object.create(Ship.prototype);
 Freighter.prototype.constructor = Freighter;
 
+// Remove function
+Freighter.prototype.remove = function() {
+	this.faction.remove(this);
+}
+
 module.exports = Freighter;
