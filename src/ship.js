@@ -103,14 +103,14 @@ Ship.prototype.update = function(objects) {
 			// RUN AWAY?
 
 		} else {
-			var distance = closestEnemy.distance;
-			var ratio = distance / this.oldDistance;
+			/*var distance = closestEnemy.distance;
+			var ratio = distance / this.oldDistance;*/
 			var angle = this.oldAngle;
-			if (ratio < 0.9 || ratio > 1.1) {
+			/*if (ratio < 0.9 || ratio > 1.1) {*/
 				angle = helpers.angle(this, closestEnemy.enemy);
-				this.oldDistance = distance;
+				/*this.oldDistance = distance;
 				this.oldAngle = angle;
-			}
+			}*/
 			var angleDiff = helpers.angleDiff(this.angle, angle);
 
 			//console.log('angleDiff', angleDiff);

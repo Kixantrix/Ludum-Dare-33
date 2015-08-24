@@ -30,13 +30,6 @@ function Faction(name) {
 	// Image resource of all ships so we can recycle images
 	this.images = {};
 	
-	// Fighters
-	for(var i = 0; i < factionInfo[name].ships.fighter.num; i++) {
-		this.images.fighter = new Image;
-		this.images.fighter.src = factionInfo[name].ships.fighter.src;
-		this.ships.push(new FighterShip(this.basePlanet.x + i * 120, this.basePlanet.y, camera, canvas, this, i));
-	}
-
 	// Civilians
 	for(var i = 0; i < factionInfo[name].ships.civilian.num; i++) {
 		this.images.civilian = new Image;
@@ -49,6 +42,13 @@ function Faction(name) {
 		this.images.freighter = new Image;
 		this.images.freighter.src = factionInfo[name].ships.freighter.src;
 		this.ships.push(new Freighter(this.basePlanet.x + i * 400, this.basePlanet.y + 300, camera, canvas, this, i));
+	}
+
+	// Fighters
+	for(var i = 0; i < factionInfo[name].ships.fighter.num; i++) {
+		this.images.fighter = new Image;
+		this.images.fighter.src = factionInfo[name].ships.fighter.src;
+		this.ships.push(new FighterShip(this.basePlanet.x + i * 120, this.basePlanet.y, camera, canvas, this, i, this.ships[i]));
 	}
 
 	// Gunships
