@@ -97,6 +97,7 @@ Freighter.prototype.update = function() {
 	} 
 	
 	this.angle += this.rotation;
+}
 // Remove function
 Freighter.prototype.remove = function() {
 	this.faction.remove(this);
